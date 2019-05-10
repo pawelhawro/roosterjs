@@ -5,6 +5,7 @@ import EditorOptions from '../interfaces/EditorOptions';
 import EditorPlugin from '../interfaces/EditorPlugin';
 import EditPlugin from '../corePlugins/EditPlugin';
 import editWithUndo from '../coreAPI/editWithUndo';
+import EventLocker from '../interfaces/EventLocker';
 import FirefoxTypeAfterLink from '../corePlugins/FirefoxTypeAfterLink';
 import focus from '../coreAPI/focus';
 import getCustomData from '../coreAPI/getCustomData';
@@ -17,7 +18,7 @@ import triggerEvent from '../coreAPI/triggerEvent';
 import TypeInContainerPlugin from '../corePlugins/TypeInContainerPlugin';
 import Undo from '../undo/Undo';
 import { Browser, getComputedStyles } from 'roosterjs-editor-dom';
-import { DefaultFormat } from 'roosterjs-editor-types';
+import { DefaultFormat, PluginEvent } from 'roosterjs-editor-types';
 
 export default function createEditorCore(
     contentDiv: HTMLDivElement,
@@ -40,9 +41,7 @@ export default function createEditorCore(
         corePlugins.undo,
         corePlugins.domEvent,
     ].filter(plugin => !!plugin);
-    let eventHandlerPlugins = allPlugins.filter(
-        plugin => plugin.onPluginEvent || plugin.willHandleEventExclusively
-    );
+    let eventHandlerPlugins = allPlugins.filter(plugin => plugin.onPluginEvent);
     return {
         contentDiv,
         document: contentDiv.ownerDocument,
@@ -55,7 +54,25 @@ export default function createEditorCore(
         eventHandlerPlugins: eventHandlerPlugins,
         api: createCoreApiMap(options.coreApiOverride),
         defaultApi: createCoreApiMap(),
+        eventLockers: createInitialLockers(allPlugins),
     };
+}
+
+/**
+ * @deprecated
+ */
+function createInitialLockers(plugins: EditorPlugin[]): EventLocker[] {
+    return plugins
+        .map(plugin =>
+            plugin.willHandleEventExclusively
+                ? {
+                      plugin: plugin,
+                      shouldHandleEvent: (event: PluginEvent) =>
+                          plugin.willHandleEventExclusively(event),
+                  }
+                : null
+        )
+        .filter(locker => !!locker);
 }
 
 function calcDefaultFormat(node: Node, baseFormat: DefaultFormat): DefaultFormat {

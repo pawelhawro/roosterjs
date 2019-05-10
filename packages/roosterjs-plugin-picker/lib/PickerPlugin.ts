@@ -42,6 +42,7 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
     private blockSuggestions: boolean;
     private isSuggesting: boolean;
     private lastKnownRange: Range;
+    private releaseEvent: () => void;
 
     constructor(public readonly dataProvider: T, private pickerOptions: PickerPluginOptions) {}
 
@@ -91,9 +92,7 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
                     this.editor.addUndoSnapshot(insertNode, this.pickerOptions.changeSource);
                 }
             },
-            (isSuggesting: boolean) => {
-                this.setIsSuggesting(isSuggesting);
-            },
+            this.setIsSuggesting,
             editor
         );
     }
@@ -107,23 +106,6 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
     }
 
     /**
-     * Check if the plugin should handle the given event exclusively.
-     * Handle an event exclusively means other plugin will not receive this event in
-     * onPluginEvent method.
-     * If two plugins will return true in willHandleEventExclusively() for the same event,
-     * the final result depends on the order of the plugins are added into editor
-     * @param event The event to check
-     */
-    public willHandleEventExclusively(event: PluginEvent) {
-        return (
-            this.isSuggesting &&
-            (event.eventType == PluginEventType.KeyDown ||
-                event.eventType == PluginEventType.KeyUp ||
-                event.eventType == PluginEventType.Input)
-        );
-    }
-
-    /**
      * Handle events triggered from editor
      * @param event PluginEvent object
      */
@@ -134,9 +116,7 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
             this.dataProvider.onContentChanged
         ) {
             // Stop suggesting since content is fully changed
-            if (this.isSuggesting) {
-                this.setIsSuggesting(false);
-            }
+            this.setIsSuggesting(false);
 
             // Undos and other major changes to document content fire this type of event.
             // Inform the data provider of the current picker placed elements in the body.
@@ -163,9 +143,7 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
         ) {
             this.onKeyUpDomEvent(event);
         } else if (event.eventType == PluginEventType.MouseUp) {
-            if (this.isSuggesting) {
-                this.setIsSuggesting(false);
-            }
+            this.setIsSuggesting(false);
         }
     }
 
@@ -173,17 +151,32 @@ export default class PickerPlugin<T extends PickerDataProvider = PickerDataProvi
         this.lastKnownRange = range;
     }
 
-    private setIsSuggesting(isSuggesting: boolean) {
-        this.isSuggesting = isSuggesting;
+    private setIsSuggesting = (isSuggesting: boolean) => {
+        if (this.isSuggesting != isSuggesting) {
+            this.isSuggesting = isSuggesting;
 
-        if (!isSuggesting) {
-            this.setLastKnownRange(null);
+            if (!isSuggesting) {
+                this.setLastKnownRange(null);
+            }
+            this.dataProvider.onIsSuggestingChanged(isSuggesting);
+
+            this.setAriaOwns(isSuggesting);
+            this.setAriaActiveDescendant(isSuggesting ? 0 : null);
+
+            if (this.isSuggesting) {
+                this.releaseEvent = this.editor.lockEvent(
+                    this,
+                    event =>
+                        event.eventType == PluginEventType.KeyDown ||
+                        event.eventType == PluginEventType.KeyUp ||
+                        event.eventType == PluginEventType.Input
+                );
+            } else if (this.releaseEvent) {
+                this.releaseEvent();
+                this.releaseEvent = null;
+            }
         }
-        this.dataProvider.onIsSuggestingChanged(isSuggesting);
-
-        this.setAriaOwns(isSuggesting);
-        this.setAriaActiveDescendant(isSuggesting ? 0 : null);
-    }
+    };
 
     private handleKeyDownEvent(event: PluginKeyboardEvent) {
         this.eventHandledOnKeyDown = true;

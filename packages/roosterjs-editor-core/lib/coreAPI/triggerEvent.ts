@@ -1,5 +1,5 @@
 import EditorCore, { TriggerEvent } from '../interfaces/EditorCore';
-import EditorPlugin from '../interfaces/EditorPlugin';
+import EventLocker from '../interfaces/EventLocker';
 import { PluginEvent } from 'roosterjs-editor-types';
 
 const triggerEvent: TriggerEvent = (
@@ -7,25 +7,16 @@ const triggerEvent: TriggerEvent = (
     pluginEvent: PluginEvent,
     broadcast: boolean
 ) => {
-    if (
-        broadcast ||
-        !core.eventHandlerPlugins.some(plugin => handledExclusively(pluginEvent, plugin))
-    ) {
+    if (broadcast || !core.eventLockers.some(locker => tryHandleLockedEvent(pluginEvent, locker))) {
         core.eventHandlerPlugins.forEach(plugin => {
-            if (plugin.onPluginEvent) {
-                plugin.onPluginEvent(pluginEvent);
-            }
+            plugin.onPluginEvent(pluginEvent);
         });
     }
 };
 
-function handledExclusively(event: PluginEvent, plugin: EditorPlugin): boolean {
-    if (
-        plugin.onPluginEvent &&
-        plugin.willHandleEventExclusively &&
-        plugin.willHandleEventExclusively(event)
-    ) {
-        plugin.onPluginEvent(event);
+function tryHandleLockedEvent(event: PluginEvent, locker: EventLocker): boolean {
+    if (locker.shouldHandleEvent(event)) {
+        locker.plugin.onPluginEvent(event);
         return true;
     }
 

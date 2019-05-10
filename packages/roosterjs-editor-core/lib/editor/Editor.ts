@@ -1,6 +1,8 @@
 import createEditorCore from './createEditorCore';
 import EditorCore from '../interfaces/EditorCore';
 import EditorOptions from '../interfaces/EditorOptions';
+import EditorPlugin from '../interfaces/EditorPlugin';
+import EventLocker from '../interfaces/EventLocker';
 import { GenericContentEditFeature } from '../interfaces/ContentEditFeature';
 import {
     BlockElement,
@@ -673,6 +675,25 @@ export default class Editor {
             source: source,
             data: data,
         } as PluginEvent);
+    }
+
+    public lockEvent(
+        plugin: EditorPlugin,
+        shouldHandleEvent: (event: PluginEvent) => boolean
+    ): () => void {
+        const locker: EventLocker = {
+            plugin,
+            shouldHandleEvent,
+        };
+
+        this.core.eventLockers.push(locker);
+
+        return () => {
+            const index = this.core.eventLockers.indexOf(locker);
+            if (index >= 0) {
+                this.core.eventLockers.splice(index, 1);
+            }
+        };
     }
 
     //#endregion

@@ -26,12 +26,7 @@ export default interface EditorPlugin {
     dispose: () => void;
 
     /**
-     * Check if the plugin should handle the given event exclusively.
-     * Handle an event exclusively means other plugin will not receive this event in
-     * onPluginEvent method.
-     * If two plugins will return true in willHandleEventExclusively() for the same event,
-     * the final result depends on the order of the plugins are added into editor
-     * @param event The event to check:
+     * @deprecated Use Editor.lockEvent() instead
      */
     willHandleEventExclusively?: (event: PluginEvent) => boolean;
 

@@ -1,6 +1,7 @@
 import DOMEventPlugin from '../corePlugins/DOMEventPlugin';
 import EditorPlugin from './EditorPlugin';
 import EditPlugin from '../corePlugins/EditPlugin';
+import EventLocker from './EventLocker';
 import FirefoxTypeAfterLink from '../corePlugins/FirefoxTypeAfterLink';
 import MouseUpPlugin from '../corePlugins/MouseUpPlugin';
 import TypeInContainerPlugin from '../corePlugins/TypeInContainerPlugin';
@@ -43,7 +44,7 @@ export default interface EditorCore {
     readonly plugins: EditorPlugin[];
 
     /**
-     * Plugins which will handle event via onPluginEvent() and/or willHandleEventExclusively()
+     * Plugins which will handle event via onPluginEvent()
      */
     readonly eventHandlerPlugins: EditorPlugin[];
 
@@ -86,6 +87,11 @@ export default interface EditorCore {
      * Cached selection range of this editor
      */
     cachedSelectionRange: Range;
+
+    /**
+     * Event lockers
+     */
+    eventLockers: EventLocker[];
 }
 
 /**

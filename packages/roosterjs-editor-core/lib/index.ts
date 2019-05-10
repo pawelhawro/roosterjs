@@ -19,6 +19,7 @@ export {
     SelectRange,
     TriggerEvent,
 } from './interfaces/EditorCore';
+export { default as EventLocker } from './interfaces/EventLocker';
 export { default as EditorOptions } from './interfaces/EditorOptions';
 export { default as EditorPlugin } from './interfaces/EditorPlugin';
 export { default as UndoService } from './interfaces/UndoService';
