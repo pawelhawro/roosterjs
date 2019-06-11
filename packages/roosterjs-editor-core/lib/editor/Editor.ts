@@ -31,6 +31,7 @@ import {
     findClosestElementAncestor,
     fromHtml,
     getBlockElementAtNode,
+    getTextContent,
     getInlineElementAtNode,
     getPositionRect,
     getRangeFromSelectionPath,
@@ -106,10 +107,10 @@ export default class Editor {
             if (Browser.isFirefox) {
                 this.core.document.execCommand(DocumentCommand.EnableObjectResizing, false, <
                     string
-                >(<any>false));
+                    >(<any>false));
                 this.core.document.execCommand(DocumentCommand.EnableInlineTableEditing, false, <
                     string
-                >(<any>false));
+                    >(<any>false));
             } else if (Browser.isIE) {
                 // Change the default paragraph separater to DIV. This is mainly for IE since its default setting is P
                 this.core.document.execCommand(
@@ -118,7 +119,7 @@ export default class Editor {
                     'div'
                 );
             }
-        } catch (e) {}
+        } catch (e) { }
 
         // 9. Let plugins know that we are ready
         this.triggerEvent(
@@ -387,7 +388,7 @@ export default class Editor {
      * @returns The text content inside editor
      */
     public getTextContent(): string {
-        return this.core.contentDiv.innerText;
+        return getTextContent(this.core.contentDiv);
     }
 
     /**
@@ -408,7 +409,7 @@ export default class Editor {
                     this.deleteNode(pathComment);
                     let range = getRangeFromSelectionPath(contentDiv, path);
                     this.select(range);
-                } catch {}
+                } catch { }
             }
 
             if (triggerContentChangedEvent) {
@@ -623,8 +624,8 @@ export default class Editor {
         nameOrMap:
             | string
             | {
-                  [eventName: string]: (event: UIEvent) => void;
-              },
+                [eventName: string]: (event: UIEvent) => void;
+            },
         handler?: (event: UIEvent) => void
     ): () => void {
         if (nameOrMap instanceof Object) {
