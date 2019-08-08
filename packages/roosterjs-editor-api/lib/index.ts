@@ -37,6 +37,7 @@ export { default as toggleSubscript } from './format/toggleSubscript';
 export { default as toggleSuperscript } from './format/toggleSuperscript';
 export { default as toggleUnderline } from './format/toggleUnderline';
 export { default as toggleHeader } from './format/toggleHeader';
+export { default as setJustifyFull } from './format/setJustifyFull';
 
 // @deprecated the function getPendableFormatState will still be available from
 // roosterjs-editor-dom package, keep export it here just for compatibility
