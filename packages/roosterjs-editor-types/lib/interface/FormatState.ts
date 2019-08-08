@@ -70,6 +70,26 @@ export interface ElementBasedFormatState {
      * Header level (0-6, 0 means no header)
      */
     headerLevel?: number;
+
+    /**
+     * Text aligned to left
+     */
+    alignLeft?: boolean;
+
+    /**
+     * Text aligned to right
+     */
+    alignRight?: boolean;
+
+    /**
+     * Text aligned center
+     */
+    alignCenter?: boolean;
+
+    /**
+     * Text aligned justified full
+     */
+    alignJustify?: boolean;
 }
 
 /**
