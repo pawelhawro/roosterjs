@@ -10,3 +10,4 @@ node_modules/
 
 # Distribution
 dist/
+package-lock.json
