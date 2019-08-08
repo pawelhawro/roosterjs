@@ -2,7 +2,7 @@ const path = require('path');
 const devServerPort = 3000;
 
 module.exports = {
-    entry: path.join(__dirname, './publish/samplesite/scripts/index.ts'),
+    entry: path.join(__dirname, './publish-gui/ts/index.ts'),
     devtool: 'source-map',
     output: {
         filename: 'demo.js',
@@ -12,7 +12,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.svg', '.scss', '.'],
-        modules: ['./publish/samplesite/scripts', 'packages', './node_modules'],
+        modules: ['./publish-gui/ts', 'packages', './node_modules'],
     },
     mode: 'development',
     module: {
@@ -43,10 +43,10 @@ module.exports = {
             },
         ],
     },
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-    },
+    // externals: {
+    //     react: 'React',
+    //     'react-dom': 'ReactDOM',
+    // },
     watch: true,
     stats: 'minimal',
     devServer: {

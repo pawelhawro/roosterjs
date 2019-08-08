@@ -1,6 +1,6 @@
 {
-    "name": "roosterjs",
-    "description": "A simple facade for all roosterjs code",
+    "name": "roosterjs-editor-gui",
+    "description": "GUI for roosterjs",
     "dependencies": {
         "roosterjs-editor-types": "",
         "roosterjs-editor-dom": "",
@@ -9,8 +9,7 @@
         "roosterjs-editor-plugins": "",
         "roosterjs-plugin-image-resize": "",
         "roosterjs-plugin-picker": "",
-        "roosterjs-html-sanitizer": "",
-        "roosterjs-editor-gui": ""
+        "roosterjs-html-sanitizer": ""
     },
     "main": "./lib/index.ts"
 }

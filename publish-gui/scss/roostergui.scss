@@ -1,0 +1,187 @@
+$_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+
+.rooster-default-wraper {
+    border: 1px solid rgb(237, 237, 237);
+}
+
+.roosterjs-toolbar {
+    font-family: $_fontFamily;
+    box-sizing: border-box;
+    padding: 4px;
+    background-color: #fff;
+    border-bottom: 1px solid rgb(237, 237, 237);
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .spacer {
+        /* line-height: 16px; */
+        font-size: 12px;
+        border-left: 1px solid #ededed;
+        /* padding: 3px; */
+        /* vertical-align: 4px; */
+        margin-right: 2px;
+        width: 1px;
+        display: inline-block;
+        height: 28px;
+        vertical-align: -6px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px;
+        margin-right: 2px;
+        line-height: 1px;
+        cursor: pointer;
+
+        > span {
+            font-size: 13px;
+            vertical-align: 3px;
+            display: inline-block;
+            margin-left: 5px;
+            color: #333;
+            padding: 0 6px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &.disabled {
+            cursor: default;
+            svg {
+                opacity: 0.3;
+            }
+            &:hover {
+                background-color: transparent;
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.checked {
+            background-color: rgba(46, 150, 208, 0.25);
+
+            &:hover {
+                background-color: rgba(46, 150, 208, 0.4);
+            }
+        }
+
+        &.dropdown {
+            overflow: visible;
+            position: relative;
+
+            &:after {
+                content: '';
+                width: 4px;
+                height: 4px;
+                display: inline-block;
+                margin: 0 2px 0 5px;
+                border-bottom: 1px solid #666;
+                border-right: 1px solid #666;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+                opacity: 1;
+                vertical-align: 6px;
+                -webkit-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+            .options {
+                display: none;
+                position: absolute;
+                top: 30px;
+                left: 0;
+                max-height: 200px;
+                overflow: auto;
+                font-size: 12px;
+                line-height: 22px;
+                -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+                box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+                border: 1px solid #ddd;
+                background-color: #fff;
+                .option {
+                    display: block;
+                    padding: 6px 40px 6px 20px;
+                    white-space: nowrap;
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                    }
+
+                    &.selected {
+                        background-color: rgba(46, 150, 208, 0.25);
+                    }
+                }
+            }
+
+            &.opened {
+                .options {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    //definicje styli dla tekstu
+    .text {
+        font-family: 'Calibri', Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .h1 {
+        font-family: 'Calibri', Helvetica, sans-serif;
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 700;
+    }
+
+    .h2 {
+        font-family: 'Calibri', Helvetica, sans-serif;
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 700;
+    }
+}
+
+.roosterjs-editor {
+    padding: 16px 12px;
+    height: 400px;
+    max-height: 400px;
+    overflow: auto;
+    outline: none;
+
+    font-family: 'Calibri', Helvetica, sans-serif;
+
+    tab-size: 20px;
+    font-size: 16px;
+
+    div:first-child,
+    blockquote:first-child {
+        margin-top: 0;
+    }
+
+    div,
+    blockquote {
+        margin-bottom: 12px;
+        margin-top: 12px;
+    }
+
+    blockquote {
+        margin-left: 40px;
+    }
+
+    h1,
+    h1 div,
+    h1 span {
+        font-size: 32px;
+        font-weight: 700;
+    }
+}
