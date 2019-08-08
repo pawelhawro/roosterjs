@@ -1,4 +1,4 @@
-import { applyTextStyle, getTagOfNode } from 'roosterjs-editor-dom';
+import { applyTextStyle, getComputedStyle, getTagOfNode } from 'roosterjs-editor-dom';
 import { ChangeSource, NodeType, PositionType } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
 
@@ -25,6 +25,7 @@ export default function applyInlineStyle(
         if (isEmptySpan) {
             editor.addUndoSnapshot();
             callback(node as HTMLElement);
+            updateLiFontSize(node as HTMLElement);
         } else {
             let isZWSNode =
                 node &&
@@ -41,7 +42,10 @@ export default function applyInlineStyle(
                 range.insertNode(node);
             }
 
-            applyTextStyle(node, callback);
+            applyTextStyle(node, (element, isInnerNode) => {
+                callback(element, isInnerNode);
+                updateLiFontSize(element, isInnerNode);
+            });
             editor.select(node, PositionType.End);
         }
     } else {
@@ -56,6 +60,8 @@ export default function applyInlineStyle(
                 let nextInlineElement = contentTraverser.getNextInlineElement();
                 inlineElement.applyStyle((element, isInnerNode) => {
                     callback(element, isInnerNode);
+                    updateLiFontSize(element, isInnerNode);
+
                     firstNode = firstNode || element;
                     lastNode = element;
                 });
@@ -65,5 +71,20 @@ export default function applyInlineStyle(
                 editor.select(firstNode, PositionType.Before, lastNode, PositionType.After);
             }
         }, ChangeSource.Format);
+    }
+}
+
+/**
+ * Special case to change LI font-size to first span fontsize
+ * @param element
+ * @param isInnerNode
+ */
+function updateLiFontSize(element: HTMLElement, isInnerNode?: boolean) {
+    if (!isInnerNode && getTagOfNode(element.parentElement) == 'LI') {
+        let index = Array.from(element.parentNode.children).indexOf(element);
+        if (index == 0) {
+            let fontSize = getComputedStyle(element, 'font-size');
+            element.parentElement.style.fontSize = fontSize;
+        }
     }
 }
