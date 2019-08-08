@@ -24,6 +24,23 @@ export function getElementBasedFormatState(
     let listTag = getTagOfNode(cacheGetElementAtCursor(editor, event, 'OL,UL'));
     let headerTag = getTagOfNode(cacheGetElementAtCursor(editor, event, 'H1,H2,H3,H4,H5,H6'));
 
+    let xel = cacheGetElementAtCursor(
+        editor,
+        event,
+        'DIV,OL,UL,LI,H1,H2,H3,H4,H5,H6,P,BLOCKQUOTE'
+    ) as HTMLElement;
+
+    let alignStyle = 'left';
+    if (null !== xel) {
+        do {
+            if (xel.style.textAlign != '') {
+                alignStyle = xel.style.textAlign;
+                break;
+            }
+            xel = xel.parentElement;
+        } while (!editor.isContentDiv(xel));
+    }
+
     return {
         isBullet: listTag == 'UL',
         isNumbering: listTag == 'OL',
@@ -32,6 +49,11 @@ export function getElementBasedFormatState(
         canUnlink: !!editor.queryElements('a[href]', QueryScope.OnSelection)[0],
         canAddImageAltText: !!editor.queryElements('img', QueryScope.OnSelection)[0],
         isBlockQuote: !!editor.queryElements('blockquote', QueryScope.OnSelection)[0],
+
+        alignLeft: alignStyle == 'left',
+        alignCenter: alignStyle == 'center',
+        alignRight: alignStyle == 'right',
+        alignJustify: alignStyle == 'justify',
     };
 }
 
