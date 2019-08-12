@@ -37,7 +37,6 @@ export default class BoldButton implements EditorToolbarButton {
         } else {
             this.span.classList.remove('checked');
         }
-        console.log(state);
     }
 
     public append(div: HTMLDivElement) {

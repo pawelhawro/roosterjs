@@ -61,8 +61,6 @@ export default class HeaderButton implements EditorToolbarButton {
     }
 
     updateState(state: FormatState) {
-        console.log(state);
-
         let size = state.headerLevel;
 
         if (this.optionsSpans.has(size)) {

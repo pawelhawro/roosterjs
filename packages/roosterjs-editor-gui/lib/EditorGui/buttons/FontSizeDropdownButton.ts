@@ -33,8 +33,6 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
     }
 
     updateState(state: FormatState) {
-        console.log(state);
-
         let size = parseInt(state.fontSize);
 
         if (this.optionsSpans.has(size)) {

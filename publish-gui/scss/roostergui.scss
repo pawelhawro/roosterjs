@@ -3,6 +3,38 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
 
 .rooster-default-wraper {
     border: 1px solid rgb(237, 237, 237);
+
+    .dialog {
+        font-family: $_fontFamily;
+        position: absolute;
+        top: 20px;
+        left: 0;
+        bottom: 40px;
+        overflow: auto;
+        font-size: 12px;
+        line-height: 22px;
+        -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+        border: 1px solid #ddd;
+        background-color: #fff;
+        width: 300px;
+        left: calc(50% - 150px);
+
+        .option {
+            cursor: pointer;
+            display: block;
+            padding: 6px 40px 6px 20px;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.selected {
+                background-color: rgba(46, 150, 208, 0.25);
+            }
+        }
+    }
 }
 
 .roosterjs-toolbar {

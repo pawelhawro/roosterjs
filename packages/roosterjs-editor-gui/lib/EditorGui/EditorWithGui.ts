@@ -6,18 +6,19 @@ import BoldButton from './buttons/BoldButton';
 import BulletListButton from './buttons/BulletListButton';
 import ClearStyleButton from './buttons/ClearStyleButton';
 import DecreaseIndentButton from './buttons/DecreaseIndentButton';
+import EditorGuiPlugin from './interfaces/EditorGuiPlugin';
 import EditorGuiToolbarPlugin from './EditorGuiToolbarPlugin';
 import EditorToolbarButton from './interfaces/EditorToolbarButton';
 import FontSizeDropdownButton from './buttons/FontSizeDropdownButton';
 import HeaderButton from './buttons/HeaderButton';
 import IncreaseIndentButton from './buttons/IncreaseIndentButton';
 import ItalicButton from './buttons/ItalicButton';
+import MergeFieldsGuiPlugin from './guiplugins/MergeFieldsGuiPlugin';
 import NumListButton from './buttons/NumListButton';
 import RedoButton from './buttons/RedoButton';
 import Spacer from './buttons/Spacer';
 import SubscriptButton from './buttons/SubscriptButton';
 import SuperscriptButton from './buttons/SuperscriptButton';
-import TabPressPlugin from './plugins/TabPressPlugin';
 import UnderlineButton from './buttons/UnderlineButton';
 import UndoButton from './buttons/UndoButton';
 import { Editor, EditorOptions } from 'roosterjs-editor-core';
@@ -36,8 +37,13 @@ export default class EditorWithGui {
      * Create instance of ContentEdit plugin
      * @param features An optional feature set to determine which features the plugin should provide
      */
-    constructor(contentDiv: HTMLDivElement, options: EditorOptions = {}) {
+    constructor(
+        contentDiv: HTMLDivElement,
+        options: EditorOptions = {},
+        guiplugins: EditorGuiPlugin[] = []
+    ) {
         this.contentDiv = contentDiv;
+        this.contentDiv.style.position = 'relative';
 
         this.toolbarDiv = <HTMLDivElement>document.createElement('div');
         this.toolbarDiv.className = 'roosterjs-toolbar';
@@ -47,11 +53,41 @@ export default class EditorWithGui {
         this.contentDiv.appendChild(this.toolbarDiv);
         this.contentDiv.appendChild(this.editorDiv);
 
-        let guiplugin = new EditorGuiToolbarPlugin();
-        guiplugin.setEditorGui(this);
+        let toolbarplugin = new EditorGuiToolbarPlugin();
+        toolbarplugin.setEditorGui(this);
 
-        options.plugins.push(guiplugin);
-        options.plugins.push(new TabPressPlugin());
+        options.plugins.push(toolbarplugin);
+
+        guiplugins.push(
+            new MergeFieldsGuiPlugin([
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+                'Pracownik.Imie',
+            ])
+        );
+
+        for (let g of guiplugins) {
+            g.initialize(this);
+        }
+        //options.plugins.push(new TabPressPlugin());
 
         this.editor = new Editor(this.editorDiv, options);
 
@@ -88,6 +124,10 @@ export default class EditorWithGui {
             new RedoButton(this.editor)
         );
 
+        for (let g of guiplugins) {
+            this.toolbar.push(g.getButton());
+        }
+
         this.toolbar.forEach(e => {
             e.append(this.toolbarDiv);
         });
@@ -104,5 +144,9 @@ export default class EditorWithGui {
         this.toolbar.forEach(element => {
             element.updateState(state);
         });
+    }
+
+    public getContentDiv() {
+        return this.contentDiv;
     }
 }

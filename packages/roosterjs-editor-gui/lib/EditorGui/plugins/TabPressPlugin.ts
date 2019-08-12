@@ -1,6 +1,9 @@
-import { Editor, EditorPlugin } from 'roosterjs-editor-core';
+import { cacheGetElementAtCursor, Editor, EditorPlugin, Keys } from 'roosterjs-editor-core';
 import { PluginEvent, PluginEventType } from 'roosterjs-editor-types';
 
+/**
+ * Insert tab sign on tab press outside li
+ */
 export default class TabPressPlugin implements EditorPlugin {
     editor: Editor;
 
@@ -20,12 +23,15 @@ export default class TabPressPlugin implements EditorPlugin {
         return this.editor;
     }
 
+    isInListElement(event: PluginEvent) {
+        let li = cacheGetElementAtCursor(this.editor, event, 'LI,TABLE');
+        return null != li;
+    }
+
     onPluginEvent(event: PluginEvent) {
         if (event.eventType == PluginEventType.KeyDown) {
-            let code = event.rawEvent.keyCode;
-
             //tab press
-            if (code == 9) {
+            if (event.rawEvent.keyCode == Keys.TAB && !this.isInListElement(event)) {
                 event.rawEvent.preventDefault();
                 if (!event.rawEvent.shiftKey) {
                     let span = document.createElement('SPAN');

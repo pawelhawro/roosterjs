@@ -1,21 +1,41 @@
 .rooster-default-wraper {
-    border: 1px solid #ededed;
-}
+  border: 1px solid #ededed; }
+  .rooster-default-wraper .dialog {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    position: absolute;
+    top: 20px;
+    left: 0;
+    bottom: 40px;
+    overflow: auto;
+    font-size: 12px;
+    line-height: 22px;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+    border: 1px solid #ddd;
+    background-color: #fff;
+    width: 300px;
+    left: calc(50% - 150px); }
+    .rooster-default-wraper .dialog .option {
+      cursor: pointer;
+      display: block;
+      padding: 6px 40px 6px 20px;
+      white-space: nowrap; }
+      .rooster-default-wraper .dialog .option:hover {
+        background-color: rgba(0, 0, 0, 0.1); }
+      .rooster-default-wraper .dialog .option.selected {
+        background-color: rgba(46, 150, 208, 0.25); }
 
 .roosterjs-toolbar {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
-        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 4px;
+  background-color: #fff;
+  border-bottom: 1px solid #ededed; }
+  .roosterjs-toolbar * {
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 4px;
-    background-color: #fff;
-    border-bottom: 1px solid #ededed;
-}
-.roosterjs-toolbar * {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.roosterjs-toolbar .spacer {
+    box-sizing: border-box; }
+  .roosterjs-toolbar .spacer {
     /* line-height: 16px; */
     font-size: 12px;
     border-left: 1px solid #ededed;
@@ -25,139 +45,114 @@
     width: 1px;
     display: inline-block;
     height: 28px;
-    vertical-align: -6px;
-}
-.roosterjs-toolbar .btn {
+    vertical-align: -6px; }
+  .roosterjs-toolbar .btn {
     display: inline-block;
     padding: 6px;
     margin-right: 2px;
     line-height: 1px;
-    cursor: pointer;
-}
-.roosterjs-toolbar .btn > span {
-    font-size: 13px;
-    vertical-align: 3px;
-    display: inline-block;
-    margin-left: 5px;
-    color: #333;
-    padding: 0 6px;
-}
-.roosterjs-toolbar .btn svg {
-    width: 16px;
-    height: 16px;
-}
-.roosterjs-toolbar .btn.disabled {
-    cursor: default;
-}
-.roosterjs-toolbar .btn.disabled svg {
-    opacity: 0.3;
-}
-.roosterjs-toolbar .btn.disabled:hover {
-    background-color: transparent;
-}
-.roosterjs-toolbar .btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.roosterjs-toolbar .btn.checked {
-    background-color: rgba(46, 150, 208, 0.25);
-}
-.roosterjs-toolbar .btn.checked:hover {
-    background-color: rgba(46, 150, 208, 0.4);
-}
-.roosterjs-toolbar .btn.dropdown {
-    overflow: visible;
-    position: relative;
-}
-.roosterjs-toolbar .btn.dropdown:after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    display: inline-block;
-    margin: 0 2px 0 5px;
-    border-bottom: 1px solid #666;
-    border-right: 1px solid #666;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    opacity: 1;
-    vertical-align: 6px;
-    -webkit-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-.roosterjs-toolbar .btn.dropdown .options {
-    display: none;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    max-height: 200px;
-    overflow: auto;
-    font-size: 12px;
-    line-height: 22px;
-    -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
-    border: 1px solid #ddd;
-    background-color: #fff;
-}
-.roosterjs-toolbar .btn.dropdown .options .option {
-    display: block;
-    padding: 6px 40px 6px 20px;
-    white-space: nowrap;
-}
-.roosterjs-toolbar .btn.dropdown .options .option:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.roosterjs-toolbar .btn.dropdown .options .option.selected {
-    background-color: rgba(46, 150, 208, 0.25);
-}
-.roosterjs-toolbar .btn.dropdown.opened .options {
-    display: block;
-}
-.roosterjs-toolbar .text {
+    cursor: pointer; }
+    .roosterjs-toolbar .btn > span {
+      font-size: 13px;
+      vertical-align: 3px;
+      display: inline-block;
+      margin-left: 5px;
+      color: #333;
+      padding: 0 6px; }
+    .roosterjs-toolbar .btn svg {
+      width: 16px;
+      height: 16px; }
+    .roosterjs-toolbar .btn.disabled {
+      cursor: default; }
+      .roosterjs-toolbar .btn.disabled svg {
+        opacity: 0.3; }
+      .roosterjs-toolbar .btn.disabled:hover {
+        background-color: transparent; }
+    .roosterjs-toolbar .btn:hover {
+      background-color: rgba(0, 0, 0, 0.1); }
+    .roosterjs-toolbar .btn.checked {
+      background-color: rgba(46, 150, 208, 0.25); }
+      .roosterjs-toolbar .btn.checked:hover {
+        background-color: rgba(46, 150, 208, 0.4); }
+    .roosterjs-toolbar .btn.dropdown {
+      overflow: visible;
+      position: relative; }
+      .roosterjs-toolbar .btn.dropdown:after {
+        content: '';
+        width: 4px;
+        height: 4px;
+        display: inline-block;
+        margin: 0 2px 0 5px;
+        border-bottom: 1px solid #666;
+        border-right: 1px solid #666;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        opacity: 1;
+        vertical-align: 6px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out; }
+      .roosterjs-toolbar .btn.dropdown .options {
+        display: none;
+        position: absolute;
+        top: 30px;
+        left: 0;
+        max-height: 200px;
+        overflow: auto;
+        font-size: 12px;
+        line-height: 22px;
+        -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+        border: 1px solid #ddd;
+        background-color: #fff; }
+        .roosterjs-toolbar .btn.dropdown .options .option {
+          display: block;
+          padding: 6px 40px 6px 20px;
+          white-space: nowrap; }
+          .roosterjs-toolbar .btn.dropdown .options .option:hover {
+            background-color: rgba(0, 0, 0, 0.1); }
+          .roosterjs-toolbar .btn.dropdown .options .option.selected {
+            background-color: rgba(46, 150, 208, 0.25); }
+      .roosterjs-toolbar .btn.dropdown.opened .options {
+        display: block; }
+  .roosterjs-toolbar .text {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 16px;
-    line-height: 22px;
-}
-.roosterjs-toolbar .h1 {
+    line-height: 22px; }
+  .roosterjs-toolbar .h1 {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 32px;
     line-height: 40px;
-    font-weight: 700;
-}
-.roosterjs-toolbar .h2 {
+    font-weight: 700; }
+  .roosterjs-toolbar .h2 {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 24px;
     line-height: 30px;
-    font-weight: 700;
-}
+    font-weight: 700; }
 
 .roosterjs-editor {
-    padding: 16px 12px;
-    height: 400px;
-    max-height: 400px;
-    overflow: auto;
-    outline: none;
-    font-family: 'Calibri', Helvetica, sans-serif;
-    -moz-tab-size: 20px;
-    -o-tab-size: 20px;
-    tab-size: 20px;
-    font-size: 16px;
-}
-.roosterjs-editor div:first-child,
-.roosterjs-editor blockquote:first-child {
-    margin-top: 0;
-}
-.roosterjs-editor div,
-.roosterjs-editor blockquote {
+  padding: 16px 12px;
+  height: 400px;
+  max-height: 400px;
+  overflow: auto;
+  outline: none;
+  font-family: 'Calibri', Helvetica, sans-serif;
+  -moz-tab-size: 20px;
+  -o-tab-size: 20px;
+  tab-size: 20px;
+  font-size: 16px; }
+  .roosterjs-editor div:first-child,
+  .roosterjs-editor blockquote:first-child {
+    margin-top: 0; }
+  .roosterjs-editor div,
+  .roosterjs-editor blockquote {
     margin-bottom: 12px;
-    margin-top: 12px;
-}
-.roosterjs-editor blockquote {
-    margin-left: 40px;
-}
-.roosterjs-editor h1,
-.roosterjs-editor h1 div,
-.roosterjs-editor h1 span {
+    margin-top: 12px; }
+  .roosterjs-editor blockquote {
+    margin-left: 40px; }
+  .roosterjs-editor h1,
+  .roosterjs-editor h1 div,
+  .roosterjs-editor h1 span {
     font-size: 32px;
-    font-weight: 700;
-}
+    font-weight: 700; }
