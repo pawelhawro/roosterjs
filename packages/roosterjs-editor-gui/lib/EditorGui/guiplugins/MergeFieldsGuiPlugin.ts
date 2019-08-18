@@ -1,4 +1,6 @@
 import AbstractButton from '../buttons/AbstractButton';
+import createSidebar from '../utils/createSidebar';
+import DOM from '../utils/DOM';
 import EditorGuiPlugin from '../interfaces/EditorGuiPlugin';
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
@@ -15,6 +17,7 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
     fields: string[];
 
     dialog: HTMLDivElement;
+    sidebar: HTMLDivElement;
     cssClass: string;
 
     constructor(fields: string[], cssClass?: string) {
@@ -29,12 +32,18 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
     initialize(editor: EditorWithGui) {
         this.editor = editor;
         this.button = new MergeFieldButton(this.editor.getEditor(), () => {
-            this.dialog.style.display = 'block';
+            if (this.sidebar.classList.contains('hidden')) {
+                this.sidebar.classList.remove('hidden');
+                this.button.setChecked();
+            } else {
+                this.sidebar.classList.add('hidden');
+                this.button.setUnChecked();
+            }
+
+            this.editor.getEditor().focus();
         });
 
-        this.dialog = document.createElement('div');
-        this.dialog.className = 'dialog';
-        this.dialog.style.display = 'none';
+        this.dialog = DOM.div('options');
 
         this.fields.forEach(a => {
             let opt = document.createElement('span');
@@ -44,7 +53,9 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
             this.dialog.appendChild(opt);
         });
 
-        this.editor.getContentDiv().appendChild(this.dialog);
+        this.sidebar = createSidebar(editor, 'Wstaw pole', this.dialog);
+
+        this.editor.getWorkspace().appendChild(this.sidebar);
 
         this.dialog.addEventListener('click', e => {
             this.dialogClick(e);
@@ -63,8 +74,6 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
 
             this.insertField(n.dataset.val);
         }
-
-        console.log(target);
     }
 
     insertField(text: string) {
@@ -75,6 +84,7 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
             editor.addUndoSnapshot(() => {
                 const span = document.createElement('a');
                 span.setAttribute('href', 'javascript:void(0);');
+                span.setAttribute('data-mergefield', 'merge');
                 span.innerHTML = text;
 
                 if (!this.cssClass) {
@@ -103,6 +113,14 @@ class MergeFieldButton extends AbstractButton {
     constructor(editor: Editor, action: () => void) {
         super(editor);
         this.action = action;
+    }
+
+    setChecked() {
+        this.span.classList.add('checked');
+    }
+
+    setUnChecked() {
+        this.span.classList.remove('checked');
     }
 
     getName(): string {

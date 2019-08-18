@@ -4,37 +4,54 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
 .rooster-default-wraper {
     border: 1px solid rgb(237, 237, 237);
 
-    .dialog {
-        font-family: $_fontFamily;
-        position: absolute;
-        top: 20px;
-        left: 0;
-        bottom: 40px;
-        overflow: auto;
-        font-size: 12px;
-        line-height: 22px;
-        -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
-        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
-        border: 1px solid #ddd;
-        background-color: #fff;
-        width: 300px;
-        left: calc(50% - 150px);
-
-        .option {
-            cursor: pointer;
-            display: block;
-            padding: 6px 40px 6px 20px;
-            white-space: nowrap;
-
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.1);
-            }
-
-            &.selected {
-                background-color: rgba(46, 150, 208, 0.25);
-            }
-        }
+    ::-webkit-scrollbar {
+        height: 17px;
+        width: 17px;
     }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 9px;
+        border: solid 6px transparent;
+        background-clip: content-box;
+        background-color: #d8d8d8;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #c3c3c3;
+    }
+
+    /*
+    ::-webkit-scrollbar-button {
+        height: 18px;
+        width: 17px;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    ::-webkit-scrollbar-button:vertical:decrement {
+        background-size: 10px 6px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAB7SURBVBiVrc9BCkFhFAXgT5krA0qZGfwmRlbAyJKsgu2IrONQFMUyZPKS8h4TZ3ju/epe/pUknSTrJP26easGdLHBFAfMSym3RpSkhy0mb/UZs1LK5QMlGWCHcc1F1wqeXijJEHuMmv7EvTo17apY4oHjFwQrLH7s1OcJNvIjgJNthNwAAAAASUVORK5CYII=');
+    }
+
+    ::-webkit-scrollbar-button:vertical:decrement:hover {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAACBSURBVBiVnc+xCoFxFIbxn7Irg0HZLBaT9SxMLsloMroekeXcBIqiKDchy5eUP195xqfz1Hv4g0ZJZmYLcywi4l4bZWYbK4ywxyQirl+jzOxgjeGbPmEcEeePKDO72GBQWHypwuMryswetuiXfqy4VVN3zUrM8MDhRwRLTGtuyjwBnEwgM6jBCjgAAAAASUVORK5CYII=');
+    }
+
+    ::-webkit-scrollbar-button:vertical:increment {
+        background-position: left center;
+        background-size: 10px 6px;
+
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAECAYAAABcDxXOAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAABQSURBVAiZbcqxCcJQAADRFweQ7CFYp7FxBCuXsHEP9xEsI7jCbaONxRe88nEMVfvqVe1G3wzDESsWPKvDz1Sdccf26zMe1Qmm6oqb/71x+QAhsRxKES06MAAAAABJRU5ErkJggg==');
+    }
+
+    ::-webkit-scrollbar-button:vertical:increment:hover {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAECAYAAABcDxXOAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAABUSURBVAiZbcqhDYNQAEXR8xmAMEk15htGqGIAbE336ABs0qTysQLzFAMJJFx5cotTSR6YMdVa18Ob0zAg6LEkqZcpyYgv2t07/JI8oSR54+O+P14b5tUXWEt+tvgAAAAASUVORK5CYII=');
+    }
+    */
 }
 
 .roosterjs-toolbar {
@@ -69,12 +86,18 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
         cursor: pointer;
 
         > span {
-            font-size: 13px;
-            vertical-align: 3px;
-            display: inline-block;
-            margin-left: 5px;
+            font-size: 11px;
+            /* vertical-align: 3px; */
+            /* display: inline-block; */
+            box-sizing: border-box;
+            height: 16px;
+            margin-left: 0px;
             color: #333;
-            padding: 0 6px;
+            padding: 0px 2px 0px 2px;
+            vertical-align: 3px;
+            line-height: 16px;
+            margin-left: 3px;
+            border: 1px solid transparent;
         }
 
         svg {
@@ -125,6 +148,7 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
                 -o-transition: all 0.3s ease-in-out;
                 transition: all 0.3s ease-in-out;
             }
+
             .options {
                 display: none;
                 position: absolute;
@@ -138,6 +162,7 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
                 box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
                 border: 1px solid #ddd;
                 background-color: #fff;
+
                 .option {
                     display: block;
                     padding: 6px 40px 6px 20px;
@@ -183,17 +208,102 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
     }
 }
 
-.roosterjs-editor {
-    padding: 16px 12px;
+.roosterjs-wrapper-editor {
+    background-color: #f7f7f7;
+    padding: 10px;
     height: 400px;
     max-height: 400px;
     overflow: auto;
     outline: none;
+    flex-grow: 1;
+}
+
+.roosterjs-workspace {
+    display: flex;
+}
+
+.sidebar {
+    flex-basis: 300px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #ddd;
+
+    &.hidden {
+        overflow: hidden;
+        flex-basis: 0;
+    }
+
+    .sidebar-title {
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 10px 10px;
+
+        font-family: $_fontFamily;
+
+        font-weight: 300;
+        color: #333;
+
+        .sidebar-close {
+            font-family: $_fontFamily;
+            float: right;
+        }
+    }
+
+    .sidebar-content {
+        flex-grow: 1;
+        flex-shrink: 1;
+        position: relative;
+    }
+
+    .options {
+        font-family: $_fontFamily;
+
+        position: absolute;
+        top: 0;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        overflow: auto;
+
+        overflow: auto;
+        font-size: 12px;
+        line-height: 22px;
+        // -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+        // box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+        border: 1px solid #f2f2f2;
+        background-color: #fff;
+
+        .option {
+            cursor: pointer;
+            display: block;
+            padding: 6px 40px 6px 10px;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.selected {
+                background-color: rgba(46, 150, 208, 0.25);
+            }
+        }
+    }
+}
+
+.roosterjs-editor {
+    background-color: #fff;
+    outline: 1px solid #c6c6c6;
+
+    margin: 0 auto;
+    padding: 47px;
+    max-width: 711px;
 
     font-family: 'Calibri', Helvetica, sans-serif;
 
     tab-size: 20px;
-    font-size: 16px;
+    font-size: 12pt;
+
+    min-height: 300px;
 
     div:first-child,
     blockquote:first-child {
@@ -215,5 +325,66 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
     h1 span {
         font-size: 32px;
         font-weight: 700;
+    }
+
+    div.page-break {
+        margin: 0px;
+        background-color: #f7f7f7;
+        width: calc(100% + 94px);
+        margin-left: -47px;
+        margin-right: -47px;
+        position: relative;
+        text-align: center;
+        font-size: 10px;
+
+        margin-top: 47px;
+        margin-bottom: 47px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        outline: 1px solid #c6c6c6;
+
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            left: -1px;
+            width: 3px;
+            background-color: #f7f7f7;
+            top: 0;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            right: -1px;
+            width: 3px;
+            background-color: #f7f7f7;
+            top: 0;
+        }
+    }
+
+    .merge-field,
+    *[data-mergefield] {
+        background-color: #ececec;
+        color: inherit;
+        text-decoration: none;
+
+        &:before {
+            content: '\00ab';
+        }
+
+        &:after {
+            content: '\00bb';
+        }
     }
 }

@@ -1,41 +1,65 @@
 .rooster-default-wraper {
-  border: 1px solid #ededed; }
-  .rooster-default-wraper .dialog {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    position: absolute;
-    top: 20px;
-    left: 0;
-    bottom: 40px;
-    overflow: auto;
-    font-size: 12px;
-    line-height: 22px;
-    -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
-    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
-    border: 1px solid #ddd;
-    background-color: #fff;
-    width: 300px;
-    left: calc(50% - 150px); }
-    .rooster-default-wraper .dialog .option {
-      cursor: pointer;
-      display: block;
-      padding: 6px 40px 6px 20px;
-      white-space: nowrap; }
-      .rooster-default-wraper .dialog .option:hover {
-        background-color: rgba(0, 0, 0, 0.1); }
-      .rooster-default-wraper .dialog .option.selected {
-        background-color: rgba(46, 150, 208, 0.25); }
+    border: 1px solid #ededed;
+    /*
+    ::-webkit-scrollbar-button {
+        height: 18px;
+        width: 17px;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    ::-webkit-scrollbar-button:vertical:decrement {
+        background-size: 10px 6px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAB7SURBVBiVrc9BCkFhFAXgT5krA0qZGfwmRlbAyJKsgu2IrONQFMUyZPKS8h4TZ3ju/epe/pUknSTrJP26easGdLHBFAfMSym3RpSkhy0mb/UZs1LK5QMlGWCHcc1F1wqeXijJEHuMmv7EvTo17apY4oHjFwQrLH7s1OcJNvIjgJNthNwAAAAASUVORK5CYII=');
+    }
+
+    ::-webkit-scrollbar-button:vertical:decrement:hover {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAACBSURBVBiVnc+xCoFxFIbxn7Irg0HZLBaT9SxMLsloMroekeXcBIqiKDchy5eUP195xqfz1Hv4g0ZJZmYLcywi4l4bZWYbK4ywxyQirl+jzOxgjeGbPmEcEeePKDO72GBQWHypwuMryswetuiXfqy4VVN3zUrM8MDhRwRLTGtuyjwBnEwgM6jBCjgAAAAASUVORK5CYII=');
+    }
+
+    ::-webkit-scrollbar-button:vertical:increment {
+        background-position: left center;
+        background-size: 10px 6px;
+
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAECAYAAABcDxXOAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAABQSURBVAiZbcqxCcJQAADRFweQ7CFYp7FxBCuXsHEP9xEsI7jCbaONxRe88nEMVfvqVe1G3wzDESsWPKvDz1Sdccf26zMe1Qmm6oqb/71x+QAhsRxKES06MAAAAABJRU5ErkJggg==');
+    }
+
+    ::-webkit-scrollbar-button:vertical:increment:hover {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAECAYAAABcDxXOAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79EJaIJEbWwsAgSrYwkEYI2Fgm+QC2SCL6a5MxDyOO4i4jYCrYBBdHGV6F/gbaCtSAoiiA2NtaKNhrOuURIEDPL7Hz7251hdxas0YyS1Ru9kM0VtPB40DU3v+CyvdBMOw468cUUXZ2OjEWpa5/3WMx46zFr1T/3r7UuJ3QFLM3CI4qqFYQnhKfWCqrJO8KdSjq2LHwm3K/JBYXvTD1e4VeTUxX+NlmLhkNgbRN2pWo4XsNKWssKy8txZzOryu99zJfYE7nZiMQe8W50wowTxMUko4QI4GNY5gAe/AzIijr53nL+DHnJVWRWWUdjhRRpCvSLuirVExKToidkZFg3+/+3r3py0F+pbg9C07NhvPeCbRtKRcP4OjKM0jE0PMFlrpqfP4ShD9GLVc19AM5NOL+qavFduNiCrkc1psXKUoO4NZmEt1NwzEPHDbQsVnr2u8/JA0Q35KuuYW8f+uS8c+kHet5n7+tdlr8AAAAJcEhZcwAACxMAAAsTAQCanBgAAABUSURBVAiZbcqhDYNQAEXR8xmAMEk15htGqGIAbE336ABs0qTysQLzFAMJJFx5cotTSR6YMdVa18Ob0zAg6LEkqZcpyYgv2t07/JI8oSR54+O+P14b5tUXWEt+tvgAAAAASUVORK5CYII=');
+    }
+    */
+}
+.rooster-default-wraper ::-webkit-scrollbar {
+    height: 17px;
+    width: 17px;
+}
+.rooster-default-wraper ::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.rooster-default-wraper ::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: solid 6px transparent;
+    background-clip: content-box;
+    background-color: #d8d8d8;
+}
+.rooster-default-wraper ::-webkit-scrollbar-thumb:hover {
+    background-color: #c3c3c3;
+}
 
 .roosterjs-toolbar {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 4px;
-  background-color: #fff;
-  border-bottom: 1px solid #ededed; }
-  .roosterjs-toolbar * {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     -webkit-box-sizing: border-box;
-    box-sizing: border-box; }
-  .roosterjs-toolbar .spacer {
+    box-sizing: border-box;
+    padding: 4px;
+    background-color: #fff;
+    border-bottom: 1px solid #ededed;
+}
+.roosterjs-toolbar * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.roosterjs-toolbar .spacer {
     /* line-height: 16px; */
     font-size: 12px;
     border-left: 1px solid #ededed;
@@ -45,114 +69,289 @@
     width: 1px;
     display: inline-block;
     height: 28px;
-    vertical-align: -6px; }
-  .roosterjs-toolbar .btn {
+    vertical-align: -6px;
+}
+.roosterjs-toolbar .btn {
     display: inline-block;
     padding: 6px;
     margin-right: 2px;
     line-height: 1px;
-    cursor: pointer; }
-    .roosterjs-toolbar .btn > span {
-      font-size: 13px;
-      vertical-align: 3px;
-      display: inline-block;
-      margin-left: 5px;
-      color: #333;
-      padding: 0 6px; }
-    .roosterjs-toolbar .btn svg {
-      width: 16px;
-      height: 16px; }
-    .roosterjs-toolbar .btn.disabled {
-      cursor: default; }
-      .roosterjs-toolbar .btn.disabled svg {
-        opacity: 0.3; }
-      .roosterjs-toolbar .btn.disabled:hover {
-        background-color: transparent; }
-    .roosterjs-toolbar .btn:hover {
-      background-color: rgba(0, 0, 0, 0.1); }
-    .roosterjs-toolbar .btn.checked {
-      background-color: rgba(46, 150, 208, 0.25); }
-      .roosterjs-toolbar .btn.checked:hover {
-        background-color: rgba(46, 150, 208, 0.4); }
-    .roosterjs-toolbar .btn.dropdown {
-      overflow: visible;
-      position: relative; }
-      .roosterjs-toolbar .btn.dropdown:after {
-        content: '';
-        width: 4px;
-        height: 4px;
-        display: inline-block;
-        margin: 0 2px 0 5px;
-        border-bottom: 1px solid #666;
-        border-right: 1px solid #666;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
-        opacity: 1;
-        vertical-align: 6px;
-        -webkit-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out; }
-      .roosterjs-toolbar .btn.dropdown .options {
-        display: none;
-        position: absolute;
-        top: 30px;
-        left: 0;
-        max-height: 200px;
-        overflow: auto;
-        font-size: 12px;
-        line-height: 22px;
-        -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
-        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
-        border: 1px solid #ddd;
-        background-color: #fff; }
-        .roosterjs-toolbar .btn.dropdown .options .option {
-          display: block;
-          padding: 6px 40px 6px 20px;
-          white-space: nowrap; }
-          .roosterjs-toolbar .btn.dropdown .options .option:hover {
-            background-color: rgba(0, 0, 0, 0.1); }
-          .roosterjs-toolbar .btn.dropdown .options .option.selected {
-            background-color: rgba(46, 150, 208, 0.25); }
-      .roosterjs-toolbar .btn.dropdown.opened .options {
-        display: block; }
-  .roosterjs-toolbar .text {
+    cursor: pointer;
+}
+.roosterjs-toolbar .btn > span {
+    font-size: 11px;
+    /* vertical-align: 3px; */
+    /* display: inline-block; */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 16px;
+    margin-left: 0px;
+    color: #333;
+    padding: 0px 2px 0px 2px;
+    vertical-align: 3px;
+    line-height: 16px;
+    margin-left: 3px;
+    border: 1px solid transparent;
+}
+.roosterjs-toolbar .btn svg {
+    width: 16px;
+    height: 16px;
+}
+.roosterjs-toolbar .btn.disabled {
+    cursor: default;
+}
+.roosterjs-toolbar .btn.disabled svg {
+    opacity: 0.3;
+}
+.roosterjs-toolbar .btn.disabled:hover {
+    background-color: transparent;
+}
+.roosterjs-toolbar .btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.roosterjs-toolbar .btn.checked {
+    background-color: rgba(46, 150, 208, 0.25);
+}
+.roosterjs-toolbar .btn.checked:hover {
+    background-color: rgba(46, 150, 208, 0.4);
+}
+.roosterjs-toolbar .btn.dropdown {
+    overflow: visible;
+    position: relative;
+}
+.roosterjs-toolbar .btn.dropdown:after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    display: inline-block;
+    margin: 0 2px 0 5px;
+    border-bottom: 1px solid #666;
+    border-right: 1px solid #666;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    opacity: 1;
+    vertical-align: 6px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.roosterjs-toolbar .btn.dropdown .options {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    max-height: 200px;
+    overflow: auto;
+    font-size: 12px;
+    line-height: 22px;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.04);
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+.roosterjs-toolbar .btn.dropdown .options .option {
+    display: block;
+    padding: 6px 40px 6px 20px;
+    white-space: nowrap;
+}
+.roosterjs-toolbar .btn.dropdown .options .option:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.roosterjs-toolbar .btn.dropdown .options .option.selected {
+    background-color: rgba(46, 150, 208, 0.25);
+}
+.roosterjs-toolbar .btn.dropdown.opened .options {
+    display: block;
+}
+.roosterjs-toolbar .text {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 16px;
-    line-height: 22px; }
-  .roosterjs-toolbar .h1 {
+    line-height: 22px;
+}
+.roosterjs-toolbar .h1 {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 32px;
     line-height: 40px;
-    font-weight: 700; }
-  .roosterjs-toolbar .h2 {
+    font-weight: 700;
+}
+.roosterjs-toolbar .h2 {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 24px;
     line-height: 30px;
-    font-weight: 700; }
+    font-weight: 700;
+}
+
+.roosterjs-wrapper-editor {
+    background-color: #f7f7f7;
+    padding: 10px;
+    height: 400px;
+    max-height: 400px;
+    overflow: auto;
+    outline: none;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.roosterjs-workspace {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.sidebar {
+    -ms-flex-preferred-size: 300px;
+    flex-basis: 300px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border-left: 1px solid #ddd;
+}
+.sidebar.hidden {
+    overflow: hidden;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+}
+.sidebar .sidebar-title {
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    padding: 10px 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-weight: 300;
+    color: #333;
+}
+.sidebar .sidebar-title .sidebar-close {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    float: right;
+}
+.sidebar .sidebar-content {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    position: relative;
+}
+.sidebar .options {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    position: absolute;
+    top: 0;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    overflow: auto;
+    overflow: auto;
+    font-size: 12px;
+    line-height: 22px;
+    border: 1px solid #f2f2f2;
+    background-color: #fff;
+}
+.sidebar .options .option {
+    cursor: pointer;
+    display: block;
+    padding: 6px 40px 6px 10px;
+    white-space: nowrap;
+}
+.sidebar .options .option:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.sidebar .options .option.selected {
+    background-color: rgba(46, 150, 208, 0.25);
+}
 
 .roosterjs-editor {
-  padding: 16px 12px;
-  height: 400px;
-  max-height: 400px;
-  overflow: auto;
-  outline: none;
-  font-family: 'Calibri', Helvetica, sans-serif;
-  -moz-tab-size: 20px;
-  -o-tab-size: 20px;
-  tab-size: 20px;
-  font-size: 16px; }
-  .roosterjs-editor div:first-child,
-  .roosterjs-editor blockquote:first-child {
-    margin-top: 0; }
-  .roosterjs-editor div,
-  .roosterjs-editor blockquote {
+    background-color: #fff;
+    outline: 1px solid #c6c6c6;
+    margin: 0 auto;
+    padding: 47px;
+    max-width: 711px;
+    font-family: 'Calibri', Helvetica, sans-serif;
+    -moz-tab-size: 20px;
+    -o-tab-size: 20px;
+    tab-size: 20px;
+    font-size: 12pt;
+    min-height: 300px;
+}
+.roosterjs-editor div:first-child,
+.roosterjs-editor blockquote:first-child {
+    margin-top: 0;
+}
+.roosterjs-editor div,
+.roosterjs-editor blockquote {
     margin-bottom: 12px;
-    margin-top: 12px; }
-  .roosterjs-editor blockquote {
-    margin-left: 40px; }
-  .roosterjs-editor h1,
-  .roosterjs-editor h1 div,
-  .roosterjs-editor h1 span {
+    margin-top: 12px;
+}
+.roosterjs-editor blockquote {
+    margin-left: 40px;
+}
+.roosterjs-editor h1,
+.roosterjs-editor h1 div,
+.roosterjs-editor h1 span {
     font-size: 32px;
-    font-weight: 700; }
+    font-weight: 700;
+}
+.roosterjs-editor div.page-break {
+    margin: 0px;
+    background-color: #f7f7f7;
+    width: calc(100% + 94px);
+    margin-left: -47px;
+    margin-right: -47px;
+    position: relative;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 47px;
+    margin-bottom: 47px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    outline: 1px solid #c6c6c6;
+    cursor: pointer;
+}
+.roosterjs-editor div.page-break:hover {
+    text-decoration: line-through;
+    color: #aaa;
+}
+.roosterjs-editor div.page-break:before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    left: -1px;
+    width: 3px;
+    background-color: #f7f7f7;
+    top: 0;
+}
+.roosterjs-editor div.page-break:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    right: -1px;
+    width: 3px;
+    background-color: #f7f7f7;
+    top: 0;
+}
+.roosterjs-editor .merge-field,
+.roosterjs-editor *[data-mergefield] {
+    background-color: #ececec;
+    color: inherit;
+    text-decoration: none;
+}
+.roosterjs-editor .merge-field:before,
+.roosterjs-editor *[data-mergefield]:before {
+    content: '\00ab';
+}
+.roosterjs-editor .merge-field:after,
+.roosterjs-editor *[data-mergefield]:after {
+    content: '\00bb';
+}

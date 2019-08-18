@@ -1,55 +1,51 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
+import { EditorWithGui } from 'roosterjs-editor-gui/lib';
 import { FormatState } from 'roosterjs/lib';
-import { getFormatState, setFontSize } from 'roosterjs-editor-api';
 
-const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 36];
+const sizes = [50, 90, 100, 110, 120, 130, 140, 150, 200];
 
-export default class FontSizeDropdownButton implements EditorToolbarButton {
+export default class ZoomButton implements EditorToolbarButton {
     private editor: Editor;
     private span: HTMLElement;
     private spanLabel: HTMLElement;
+    private wrapper: HTMLElement;
 
     private optionsSpans: Map<number, HTMLElement> = new Map();
 
-    constructor(editor: Editor) {
-        this.editor = editor;
+    constructor(editor: EditorWithGui) {
+        this.wrapper = editor.getEditorDiv();
+        this.editor = editor.getEditor();
         this.span = this.generateElement();
     }
 
     getName(): string {
-        return 'fontsize';
+        return 'zoom';
     }
 
     getIcon(): string {
-        return icons.fontSize;
+        return icons.zoom;
     }
 
     doAction(size: string) {
-        //toggleUnderline(this.editor);
+        let zoom = parseFloat(size) / 100;
+        this.wrapper.style.zoom = zoom + '';
 
-        setFontSize(this.editor, size + 'pt');
-        this.updateState(getFormatState(this.editor));
-    }
-
-    updateState(state: FormatState) {
-        let size = parseInt(state.fontSize);
-
-        if (this.optionsSpans.has(size)) {
-            if (this.optionsSpans.get(size).classList.contains('selected')) {
-                return;
-            }
-        }
+        let s = parseInt(size);
 
         this.optionsSpans.forEach((v, key) => {
-            if (key != size) {
+            if (key != s) {
                 v.classList.remove('selected');
             } else {
                 v.classList.add('selected');
-                this.spanLabel.innerHTML = key + '';
+                this.spanLabel.innerHTML = size + '%';
             }
         });
+    }
+
+    updateState(state: FormatState) {
+        //nothing
     }
 
     public append(div: HTMLDivElement) {
@@ -62,7 +58,8 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
         span.innerHTML = this.getIcon();
 
         this.spanLabel = <HTMLSpanElement>document.createElement('span');
-        this.spanLabel.innerHTML = '12';
+        this.spanLabel.innerHTML = '100%';
+
         span.appendChild(this.spanLabel);
 
         document.addEventListener('click', (e: MouseEvent) => {
@@ -90,7 +87,7 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
             var o = <HTMLSpanElement>document.createElement('span');
             o.className = 'option';
             o.setAttribute('data-size', a + '');
-            o.innerHTML = a + '';
+            o.innerHTML = a + '%';
             optionsDiv.appendChild(o);
 
             this.optionsSpans.set(a, o);

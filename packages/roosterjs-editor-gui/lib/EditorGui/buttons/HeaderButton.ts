@@ -100,6 +100,14 @@ export default class HeaderButton implements EditorToolbarButton {
 
         span.appendChild(this.spanLabel);
 
+        document.addEventListener('click', (e: MouseEvent) => {
+            var ec = e.target as HTMLElement;
+
+            if (this.span.classList.contains('opened') && !this.span.contains(ec)) {
+                this.span.classList.remove('opened');
+            }
+        });
+
         span.addEventListener('click', (_e: MouseEvent) => {
             this.editor.focus();
 
