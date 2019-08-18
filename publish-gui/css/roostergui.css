@@ -1,3 +1,10 @@
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .rooster-default-wraper {
     border: 1px solid #ededed;
     /*

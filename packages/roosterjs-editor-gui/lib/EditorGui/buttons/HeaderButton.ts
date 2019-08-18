@@ -55,7 +55,6 @@ export default class HeaderButton implements EditorToolbarButton {
     }
 
     doAction(size: string) {
-        //toggleUnderline(this.editor);
         toggleHeader(this.editor, parseInt(size));
         this.updateState(getFormatState(this.editor));
     }
@@ -108,7 +107,7 @@ export default class HeaderButton implements EditorToolbarButton {
             }
         });
 
-        span.addEventListener('click', (_e: MouseEvent) => {
+        span.addEventListener('click', (e: MouseEvent) => {
             this.editor.focus();
 
             if (this.span.classList.contains('opened')) {
@@ -141,8 +140,6 @@ export default class HeaderButton implements EditorToolbarButton {
                 let tw = target as HTMLElement;
                 this.doAction(tw.dataset.size);
             }
-
-            console.log(e);
         });
 
         span.appendChild(optionsDiv);

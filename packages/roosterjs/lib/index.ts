@@ -8,3 +8,4 @@ export * from 'roosterjs-editor-plugins';
 export * from 'roosterjs-plugin-image-resize';
 export * from 'roosterjs-html-sanitizer';
 export * from 'roosterjs-plugin-picker';
+export * from 'roosterjs-editor-gui';

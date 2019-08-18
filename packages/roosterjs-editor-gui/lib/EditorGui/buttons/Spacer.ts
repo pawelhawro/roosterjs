@@ -8,7 +8,7 @@ import { FormatState } from 'roosterjs/lib';
 export default class Spacer implements EditorToolbarButton {
     private span: HTMLElement;
 
-    constructor(_editor: Editor) {
+    constructor(editor: Editor) {
         this.span = this.generateElement();
     }
 

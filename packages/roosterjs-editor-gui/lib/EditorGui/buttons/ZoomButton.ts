@@ -70,7 +70,7 @@ export default class ZoomButton implements EditorToolbarButton {
             }
         });
 
-        span.addEventListener('click', (_e: MouseEvent) => {
+        span.addEventListener('click', (e: MouseEvent) => {
             this.editor.focus();
 
             if (this.span.classList.contains('opened')) {
@@ -99,11 +99,7 @@ export default class ZoomButton implements EditorToolbarButton {
             if (target && target instanceof HTMLElement) {
                 let tw = target as HTMLElement;
                 this.doAction(tw.dataset.size);
-
-                console.log(tw);
             }
-
-            console.log(e);
         });
 
         span.appendChild(optionsDiv);

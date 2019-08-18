@@ -14,7 +14,6 @@ export default class BoldButton implements EditorToolbarButton {
     constructor(editor: Editor) {
         this.editor = editor;
         this.span = this.generateElement();
-        console.log(this.editor);
     }
 
     getName(): string {
@@ -26,7 +25,6 @@ export default class BoldButton implements EditorToolbarButton {
     }
 
     doAction() {
-        console.log(this, this.editor);
         toggleBold(this.editor);
         this.updateState(getFormatState(this.editor));
     }
@@ -52,7 +50,7 @@ export default class BoldButton implements EditorToolbarButton {
         let span = <HTMLSpanElement>document.createElement('span');
         span.className = 'btn';
         span.innerHTML = this.getIcon();
-        span.addEventListener('click', (_e: MouseEvent) => {
+        span.addEventListener('click', (e: MouseEvent) => {
             this.doAction();
         });
         return span;

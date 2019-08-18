@@ -30,7 +30,7 @@ export default abstract class AbstractButton implements EditorToolbarButton {
         let span = <HTMLSpanElement>document.createElement('span');
         span.className = 'btn';
         span.innerHTML = this.getIcon();
-        span.addEventListener('click', (_e: MouseEvent) => {
+        span.addEventListener('click', (e: MouseEvent) => {
             this.doAction();
         });
         return span;
