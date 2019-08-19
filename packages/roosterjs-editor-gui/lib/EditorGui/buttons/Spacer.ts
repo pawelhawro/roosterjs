@@ -1,6 +1,6 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 
 /**
  * Interface of an editor plugin

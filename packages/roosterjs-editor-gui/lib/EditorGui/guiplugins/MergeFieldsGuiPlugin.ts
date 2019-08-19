@@ -6,7 +6,7 @@ import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { ChangeSource, FormatState } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorWithGui } from 'roosterjs-editor-gui/lib';
+import { EditorWithGui } from 'roosterjs-editor-gui';
 
 /**
  * Insert tab sign on tab press outside li

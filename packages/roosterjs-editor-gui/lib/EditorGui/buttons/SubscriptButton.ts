@@ -1,7 +1,7 @@
 import AbstractButton from './AbstractButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 import { getFormatState, toggleSubscript } from 'roosterjs-editor-api';
 
 export default class SubscriptButton extends AbstractButton {

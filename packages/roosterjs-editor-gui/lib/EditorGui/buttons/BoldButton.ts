@@ -1,7 +1,7 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 import { getFormatState } from 'roosterjs-editor-api';
 import { toggleBold } from 'roosterjs-editor-api';
 /**

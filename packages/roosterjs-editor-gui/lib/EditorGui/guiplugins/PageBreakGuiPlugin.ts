@@ -2,9 +2,9 @@ import AbstractButton from '../buttons/AbstractButton';
 import EditorGuiPlugin from '../interfaces/EditorGuiPlugin';
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
-import { ChangeSource, ContentPosition, FormatState } from 'roosterjs/lib';
+import { ChangeSource, ContentPosition, FormatState } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorWithGui } from 'roosterjs-editor-gui/lib';
+import { EditorWithGui } from 'roosterjs-editor-gui';
 
 /**
  * Insert tab sign on tab press outside li

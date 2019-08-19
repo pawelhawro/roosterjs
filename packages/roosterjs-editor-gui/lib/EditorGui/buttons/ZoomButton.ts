@@ -2,7 +2,7 @@ import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorWithGui } from 'roosterjs-editor-gui/lib';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 
 const sizes = [50, 90, 100, 110, 120, 130, 140, 150, 200];
 

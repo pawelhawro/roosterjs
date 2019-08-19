@@ -1,7 +1,7 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 import { getFormatState, setFontSize } from 'roosterjs-editor-api';
 
 const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 36];

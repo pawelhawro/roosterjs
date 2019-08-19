@@ -1,5 +1,5 @@
 import EditorToolbarButton from './EditorToolbarButton';
-import { EditorWithGui } from 'roosterjs-editor-gui/lib';
+import { EditorWithGui } from 'roosterjs-editor-gui';
 
 /**
  * Interface of an editor plugin

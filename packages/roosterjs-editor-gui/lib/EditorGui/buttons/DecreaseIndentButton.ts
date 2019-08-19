@@ -1,7 +1,7 @@
 import AbstractButton from './AbstractButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState, Indentation } from 'roosterjs/lib';
+import { FormatState, Indentation } from 'roosterjs-editor-types';
 import { setIndentation } from 'roosterjs-editor-api';
 
 export default class DecreaseIndentButton extends AbstractButton {

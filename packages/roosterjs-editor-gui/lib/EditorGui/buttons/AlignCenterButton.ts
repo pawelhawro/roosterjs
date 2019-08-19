@@ -1,6 +1,6 @@
 import AbstractButton from './AbstractButton';
 import icons from '../icons/icons';
-import { Alignment, FormatState } from 'roosterjs/lib';
+import { Alignment, FormatState } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
 import { getFormatState, setAlignment } from 'roosterjs-editor-api';
 
