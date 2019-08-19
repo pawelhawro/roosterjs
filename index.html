@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>RoosterJs pawel Demo Page</title>
-        <style>
-            #mainPane {
-                position: absolute;
-                left: 10px;
-                right: 10px;
-                top: 10px;
-                bottom: 10px;
-            }
-        </style>
+        <title>RoosterJs GUI Demo Page</title>
+        <link rel="stylesheet" type="text/css" href="publish-gui/css/roostergui.css" />
+		<style>
+		h1 {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+			font-size: 22px; 
+			font-weight: 400;
+		}
+		
+		#editor {
+			height: calc(100vh - 100px);
+		}
+		</style>
     </head>
     <body>
-        <div id="mainPane"></div>
-        <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-        <script src="dist/rooster-min.js"></script>
-        <script src="demo.js"></script>
+		<h1>RoosterJS GUI Demo - based on forked roosterjs</h1>
+        <div id="editor" class="rooster-default-wraper"></div>
+        <script src="dist/roosterjs/dist/rooster-min.js"></script>
+		<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+			console.log(roosterjs);
+			
+			roosterjs.createEditorWithGui(document.getElementById('editor'), ['Osoba.Imie', 'Osoba.Nazwisko', 'Osoba.Adres.Ulica']);
+		});
+		</script>
     </body>
 </html>
