@@ -22,7 +22,7 @@ export default class TableDropdownButton implements EditorToolbarButton {
     }
 
     getName(): string {
-        return 'fontsize';
+        return 'table';
     }
 
     getIcon(): string {
@@ -103,16 +103,12 @@ export default class TableDropdownButton implements EditorToolbarButton {
                     z.node.classList.remove('active');
                 }
             });
-
-            console.log(e, e.offsetX, e.offsetY, c, r);
         });
 
         optionsDiv.addEventListener('click', e => {
             let c = Math.ceil(e.offsetX / 20);
             let r = Math.ceil(e.offsetY / 20);
-
             this.doAction(c, r);
-            console.log(e, e.offsetX, e.offsetY, c, r);
         });
 
         span.appendChild(optionsDiv);
