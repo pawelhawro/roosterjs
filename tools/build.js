@@ -357,8 +357,8 @@ function copySample() {
 }
 
 async function buildDemoSite() {
-    var sourcePathRoot = path.join(rootPath, 'publish/samplesite');
-    var sourcePath = path.join(sourcePathRoot, 'scripts');
+    var sourcePathRoot = path.join(rootPath, 'publish/samplegui');
+    var sourcePath = path.join(sourcePathRoot, 'ts');
     runNode(typescriptPath + ' --noEmit ', sourcePath);
 
     var distPathRoot = path.join(distPath, 'roosterjs');
@@ -406,11 +406,11 @@ async function buildDemoSite() {
             (externals, package) => {
                 externals[package] = 'roosterjs';
                 return externals;
-            },
-            {
-                react: 'React',
-                'react-dom': 'ReactDOM',
             }
+            // {
+            //     react: 'React',
+            //     'react-dom': 'ReactDOM',
+            // }
         ),
         stats: 'minimal',
         mode: 'production',

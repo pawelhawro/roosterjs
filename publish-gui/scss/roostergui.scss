@@ -10,6 +10,9 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
 
 .rooster-default-wraper {
     border: 1px solid rgb(237, 237, 237);
+    display: flex;
+    flex-direction: column;
+    min-height: 1px;
 
     ::-webkit-scrollbar {
         height: 17px;
@@ -193,6 +196,36 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
         }
     }
 
+    .options.table-insert {
+        width: 210px;
+        padding: 5px 5px 2px 2px;
+        overflow: visible !important;
+        height: 210px;
+        max-height: none !important;
+
+        > div {
+            line-height: 10px;
+            font-size: 1px;
+            pointer-events: none;
+        }
+        .table-cell-square {
+            display: inline-block;
+            width: 17px;
+            height: 17px;
+            font-size: 1px;
+            background-color: #eee;
+            border: 1px solid #aaa;
+            margin-left: 3px;
+            margin-bottom: 3px;
+            pointer-events: none;
+
+            &.active {
+                background-color: #e2ecfb;
+                border: 1px solid #7e9cca;
+            }
+        }
+    }
+
     //definicje styli dla tekstu
     .text {
         font-family: 'Calibri', Helvetica, sans-serif;
@@ -218,8 +251,7 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
 .roosterjs-wrapper-editor {
     background-color: #f7f7f7;
     padding: 10px;
-    height: 400px;
-    max-height: 400px;
+
     overflow: auto;
     outline: none;
     flex-grow: 1;
@@ -227,6 +259,8 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
 
 .roosterjs-workspace {
     display: flex;
+    min-height: 0;
+    flex: 1;
 }
 
 .sidebar {

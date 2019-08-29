@@ -7,6 +7,14 @@
 
 .rooster-default-wraper {
     border: 1px solid #ededed;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-height: 1px;
     /*
     ::-webkit-scrollbar-button {
         height: 18px;
@@ -171,6 +179,33 @@
 .roosterjs-toolbar .btn.dropdown.opened .options {
     display: block;
 }
+.roosterjs-toolbar .options.table-insert {
+    width: 210px;
+    padding: 5px 5px 2px 2px;
+    overflow: visible !important;
+    height: 210px;
+    max-height: none !important;
+}
+.roosterjs-toolbar .options.table-insert > div {
+    line-height: 10px;
+    font-size: 1px;
+    pointer-events: none;
+}
+.roosterjs-toolbar .options.table-insert .table-cell-square {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    font-size: 1px;
+    background-color: #eee;
+    border: 1px solid #aaa;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    pointer-events: none;
+}
+.roosterjs-toolbar .options.table-insert .table-cell-square.active {
+    background-color: #e2ecfb;
+    border: 1px solid #7e9cca;
+}
 .roosterjs-toolbar .text {
     font-family: 'Calibri', Helvetica, sans-serif;
     font-size: 16px;
@@ -192,8 +227,6 @@
 .roosterjs-wrapper-editor {
     background-color: #f7f7f7;
     padding: 10px;
-    height: 400px;
-    max-height: 400px;
     overflow: auto;
     outline: none;
     -webkit-box-flex: 1;
@@ -205,6 +238,10 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    min-height: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
 }
 
 .sidebar {

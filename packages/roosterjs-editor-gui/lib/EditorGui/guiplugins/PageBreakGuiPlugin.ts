@@ -80,7 +80,7 @@ export default class PageBreakGuiPlugin implements EditorGuiPlugin {
                     }
 
                     div.innerHTML =
-                        '‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧ Page Break ‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧‧';
+                        '&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot; Page Break &centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;&centerdot;';
                     div.setAttribute('contenteditable', 'false');
 
                     editor.insertNode(div, {

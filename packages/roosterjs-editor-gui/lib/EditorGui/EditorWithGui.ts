@@ -20,11 +20,13 @@ import RedoButton from './buttons/RedoButton';
 import Spacer from './buttons/Spacer';
 import SubscriptButton from './buttons/SubscriptButton';
 import SuperscriptButton from './buttons/SuperscriptButton';
+import TableDropdownButton from './buttons/TableDropdownButton';
 import UnderlineButton from './buttons/UnderlineButton';
 import UndoButton from './buttons/UndoButton';
 import ZoomButton from './buttons/ZoomButton';
 import { Editor, EditorOptions } from 'roosterjs-editor-core';
 import { FormatState } from 'roosterjs-editor-types';
+import { TableResize } from 'roosterjs/lib';
 
 export default class EditorWithGui {
     private editor: Editor;
@@ -72,6 +74,7 @@ export default class EditorWithGui {
         toolbarplugin.setEditorGui(this);
 
         options.plugins.push(toolbarplugin);
+        options.plugins.push(new TableResize());
 
         let guiplugins = new Array<EditorGuiPlugin>();
 
@@ -109,6 +112,9 @@ export default class EditorWithGui {
             new AlignCenterButton(this.editor),
             new AlignRightButton(this.editor),
             new AlignJustifyButton(this.editor),
+            new Spacer(this.editor),
+
+            new TableDropdownButton(this.editor),
             new Spacer(this.editor),
 
             new ClearStyleButton(this.editor),
