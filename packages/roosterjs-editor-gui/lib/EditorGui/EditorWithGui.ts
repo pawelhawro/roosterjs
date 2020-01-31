@@ -59,6 +59,7 @@ export default class EditorWithGui {
 
         this.editorWrapperDiv = <HTMLDivElement>document.createElement('div');
         this.editorWrapperDiv.className = 'roosterjs-wrapper-editor';
+        this.editorWrapperDiv.style.position = 'relative';
 
         this.editorDiv = <HTMLDivElement>document.createElement('div');
         this.editorDiv.className = 'roosterjs-editor';

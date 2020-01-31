@@ -329,6 +329,57 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
             }
         }
     }
+
+    .grname {
+        cursor: pointer;
+        display: block;
+        padding: 6px 40px 6px 10px;
+        white-space: nowrap;
+
+        &:before {
+            content: '+';
+            display: inline-block;
+            margin-right: 5px;
+            margin-top: px;
+            font-size: 13px;
+            line-height: 15px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #eee;
+            text-align: center;
+            vertical-align: 0px;
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        &.selected {
+            background-color: rgba(46, 150, 208, 0.25);
+        }
+    }
+
+    ul {
+        list-style: none;
+        margin-left: 0;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    li ul {
+        margin-left: 25px;
+        display: none;
+    }
+
+    li.active > .grname {
+        &:before {
+            content: '-';
+        }
+    }
+
+    li.active > ul {
+        display: block;
+    }
 }
 
 .roosterjs-editor {

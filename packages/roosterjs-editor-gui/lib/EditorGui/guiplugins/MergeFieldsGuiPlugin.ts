@@ -8,6 +8,80 @@ import { ChangeSource, FormatState } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorWithGui } from 'roosterjs-editor-gui';
 
+class MergeFieldGroup {
+    name: string;
+
+    offs: number;
+
+    fields: string[] = [];
+
+    groups: MergeFieldGroup[] = [];
+
+    constructor(name: string, offs: number) {
+        this.name = name;
+        this.offs = offs;
+    }
+
+    print(e: HTMLElement) {
+        var ul = document.createElement('ul');
+
+        this.fields.forEach((e, i) => {
+            let li = document.createElement('li');
+
+            let opt = document.createElement('span');
+            opt.className = 'option';
+            opt.dataset.val = e;
+            opt.innerText = e;
+
+            li.appendChild(opt);
+            ul.appendChild(li);
+        });
+
+        this.groups.forEach((g, i) => {
+            let li = document.createElement('li');
+
+            let opt = document.createElement('div');
+            opt.className = 'grname';
+            opt.innerText = g.name;
+            li.appendChild(opt);
+
+            g.print(li);
+
+            ul.appendChild(li);
+        });
+        e.appendChild(ul);
+    }
+
+    addItem(val: string): boolean {
+        var parts = val.split('.');
+
+        if (this.name == '' && parts.length == 1) {
+            this.fields.push(val);
+            return true;
+        }
+
+        if (this.offs == -1 || this.name == parts[this.offs]) {
+            if (this.offs + 2 == parts.length) {
+                this.fields.push(val);
+                return true;
+            } else {
+                for (var i = 0; i < this.groups.length; i++) {
+                    if (this.groups[i].addItem(val)) {
+                        return true;
+                    }
+                }
+
+                var sg = new MergeFieldGroup(parts[this.offs + 1], this.offs + 1);
+                sg.addItem(val);
+                this.groups.push(sg);
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
 /**
  * Insert tab sign on tab press outside li
  */
@@ -20,9 +94,17 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
     sidebar: HTMLDivElement;
     cssClass: string;
 
+    groups: MergeFieldGroup;
+
     constructor(fields: string[], cssClass?: string) {
         this.fields = fields;
         this.cssClass = cssClass;
+
+        this.groups = new MergeFieldGroup('', -1);
+
+        fields.forEach((a, i) => {
+            this.groups.addItem(a);
+        });
     }
 
     getName() {
@@ -45,13 +127,7 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
 
         this.dialog = DOM.div('options');
 
-        this.fields.forEach(a => {
-            let opt = document.createElement('span');
-            opt.className = 'option';
-            opt.dataset.val = a;
-            opt.innerText = a;
-            this.dialog.appendChild(opt);
-        });
+        this.groups.print(this.dialog);
 
         this.sidebar = createSidebar(editor, 'Wstaw pole', this.dialog);
 
@@ -72,7 +148,17 @@ export default class MergeFieldsGuiPlugin implements EditorGuiPlugin {
         if (target && target instanceof HTMLElement) {
             let n = target as HTMLElement;
 
-            this.insertField(n.dataset.val);
+            if (n.classList.contains('option')) {
+                this.insertField(n.dataset.val);
+            }
+
+            if (n.classList.contains('grname')) {
+                if (n.parentElement.classList.contains('active')) {
+                    n.parentElement.classList.remove('active');
+                } else {
+                    n.parentElement.classList.add('active');
+                }
+            }
         }
     }
 

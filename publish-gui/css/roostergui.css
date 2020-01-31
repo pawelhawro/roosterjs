@@ -313,6 +313,47 @@
 .sidebar .options .option.selected {
     background-color: rgba(46, 150, 208, 0.25);
 }
+.sidebar .grname {
+    cursor: pointer;
+    display: block;
+    padding: 6px 40px 6px 10px;
+    white-space: nowrap;
+}
+.sidebar .grname:before {
+    content: '+';
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: px;
+    font-size: 13px;
+    line-height: 15px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #eee;
+    text-align: center;
+    vertical-align: 0px;
+}
+.sidebar .grname:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.sidebar .grname.selected {
+    background-color: rgba(46, 150, 208, 0.25);
+}
+.sidebar ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin: 0;
+}
+.sidebar li ul {
+    margin-left: 25px;
+    display: none;
+}
+.sidebar li.active > .grname:before {
+    content: '-';
+}
+.sidebar li.active > ul {
+    display: block;
+}
 
 .roosterjs-editor {
     background-color: #fff;
