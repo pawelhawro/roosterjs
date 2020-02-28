@@ -7,6 +7,7 @@ import mapPluginEvents from './mapPluginEvents';
 import { calculateDefaultFormat } from '../coreAPI/calculateDefaultFormat';
 import { convertContentToDarkMode } from '../darkMode/convertContentToDarkMode';
 import { GenericContentEditFeature } from '../interfaces/ContentEditFeature';
+import { isRange } from 'roosterjs-cross-window';
 import {
     BlockElement,
     ChangeSource,
@@ -16,15 +17,14 @@ import {
     InlineElement,
     InsertOption,
     NodePosition,
-    NodeType,
     PluginEvent,
     PluginEventData,
     PluginEventFromType,
     PluginEventType,
     PositionType,
     QueryScope,
-    SelectionPath,
     Rect,
+    SelectionPath,
 } from 'roosterjs-editor-types';
 import {
     collapseNodes,
@@ -34,17 +34,19 @@ import {
     findClosestElementAncestor,
     fromHtml,
     getBlockElementAtNode,
+    getHtmlWithSelectionPath,
+    getSelectionPath,
     getTextContent,
     getInlineElementAtNode,
     getPositionRect,
-    getRangeFromSelectionPath,
-    getSelectionPath,
     getTagOfNode,
     isNodeEmpty,
     Position,
     PositionContentSearcher,
     queryElements,
+    setHtmlWithSelectionPath,
     wrap,
+    isPositionAtBeginningOf,
 } from 'roosterjs-editor-dom';
 
 /**
@@ -97,14 +99,14 @@ export default class Editor {
         }
 
         // 8. Do proper change for browsers to disable some browser-specified behaviors.
-        adjustBrowserBehavior();
+        adjustBrowserBehavior(this.core.document);
 
         // 9. Let plugins know that we are ready
         this.triggerPluginEvent(PluginEventType.EditorReady, {}, true /*broadcast*/);
 
         // 10. Before give editor to user, make sure there is at least one DIV element to accept typing
         this.core.corePlugins.typeInContainer.ensureTypeInElement(
-            new Position(contentDiv, PositionType.Begin)
+            this.getFocusedPosition() || new Position(contentDiv, PositionType.Begin)
         );
     }
 
@@ -353,16 +355,10 @@ export default class Editor {
         triggerExtractContentEvent: boolean = true,
         includeSelectionMarker: boolean = false
     ): string {
-        let contentDiv = this.core.contentDiv;
-        let content = contentDiv.innerHTML;
-        let selectionPath: SelectionPath;
-
-        if (
-            includeSelectionMarker &&
-            (selectionPath = getSelectionPath(contentDiv, this.getSelectionRange()))
-        ) {
-            content += `<!--${JSON.stringify(selectionPath)}-->`;
-        }
+        let content = getHtmlWithSelectionPath(
+            this.core.contentDiv,
+            includeSelectionMarker && this.getSelectionRange()
+        );
 
         if (triggerExtractContentEvent) {
             content = this.triggerPluginEvent(
@@ -396,19 +392,9 @@ export default class Editor {
         let contentDiv = this.core.contentDiv;
         let contentChanged = false;
         if (contentDiv.innerHTML != content) {
-            contentDiv.innerHTML = content || '';
+            let range = setHtmlWithSelectionPath(contentDiv, content);
+            this.select(range);
             contentChanged = true;
-
-            let pathComment = contentDiv.lastChild;
-
-            if (pathComment && pathComment.nodeType == NodeType.Comment) {
-                try {
-                    let path = JSON.parse(pathComment.nodeValue) as SelectionPath;
-                    this.deleteNode(pathComment);
-                    let range = getRangeFromSelectionPath(contentDiv, path);
-                    this.select(range);
-                } catch {}
-            }
         }
 
         // Convert content even if it hasn't changed.
@@ -444,10 +430,11 @@ export default class Editor {
     public insertContent(content: string, option?: InsertOption) {
         if (content) {
             let allNodes = fromHtml(content, this.core.document);
+
             // If it is to insert on new line, and there are more than one node in the collection, wrap all nodes with
             // a parent DIV before calling insertNode on each top level sub node. Otherwise, every sub node may get wrapped
             // separately to show up on its own line
-            if (option && option.insertOnNewLine && allNodes.length > 0) {
+            if (option && option.insertOnNewLine && allNodes.length > 1) {
                 allNodes = [wrap(allNodes)];
             }
             for (let i = 0; i < allNodes.length; i++) {
@@ -467,6 +454,16 @@ export default class Editor {
      */
     public getSelectionRange(): Range {
         return this.core.api.getSelectionRange(this.core, true /*tryGetFromCache*/);
+    }
+
+    /**
+     * Get current selection in a serializable format
+     * It does a live pull on the selection, if nothing retrieved, return whatever we have in cache.
+     * @returns current selection path, or null if editor never got focus before
+     */
+    public getSelectionPath(): SelectionPath {
+        const range = this.getSelectionRange();
+        return range && getSelectionPath(this.core.contentDiv, range);
     }
 
     /**
@@ -536,8 +533,25 @@ export default class Editor {
         endOffset: number | PositionType
     ): boolean;
 
+    /**
+     * Select content by selection path
+     * @param path A selection path object
+     * @returns True if content is selected, otherwise false
+     */
+    public select(path: SelectionPath): boolean;
+
     public select(arg1: any, arg2?: any, arg3?: any, arg4?: any): boolean {
-        let range = arg1 instanceof Range ? arg1 : createRange(arg1, arg2, arg3, arg4);
+        let range = !arg1
+            ? null
+            : isRange(arg1)
+            ? arg1
+            : Array.isArray(arg1.start) && Array.isArray(arg1.end)
+            ? createRange(
+                  this.core.contentDiv,
+                  (<SelectionPath>arg1).start,
+                  (<SelectionPath>arg1).end
+              )
+            : createRange(arg1, arg2, arg3, arg4);
         return this.contains(range) && this.core.api.selectRange(this.core, range);
     }
 
@@ -609,6 +623,16 @@ export default class Editor {
             startFrom = position && position.node;
         }
         return startFrom && findClosestElementAncestor(startFrom, this.core.contentDiv, selector);
+    }
+
+    /**
+     * Check if this position is at beginning of the editor.
+     * This will return true if all nodes between the beginning of target node and the position are empty.
+     * @param position The position to check
+     * @returns True if position is at beginning of the editor, otherwise false
+     */
+    public isPositionAtBeginning(position: NodePosition): boolean {
+        return isPositionAtBeginningOf(position, this.core.contentDiv);
     }
 
     //#endregion
@@ -885,6 +909,14 @@ export default class Editor {
         } else {
             this.core.contentDiv.setAttribute(name, value);
         }
+    }
+
+    /**
+     * get DOM attribute of editor content DIV
+     * @param name Name of the attribute
+     */
+    public getEditorDomAttribute(name: string): string {
+        return this.core.contentDiv.getAttribute(name);
     }
 
     /**

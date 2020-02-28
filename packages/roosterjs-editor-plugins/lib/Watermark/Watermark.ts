@@ -5,7 +5,6 @@ import {
     PluginEvent,
     PluginEventType,
     ContentPosition,
-    ContentChangedEvent,
     ExtractContentEvent,
     DefaultFormat,
 } from 'roosterjs-editor-types';
@@ -15,6 +14,7 @@ const WATERMARK_REGEX = new RegExp(
     `<span[^>]*id=['"]?${WATERMARK_SPAN_ID}['"]?[^>]*>[^<]*</span>`,
     'ig'
 );
+const SPELLCHECK_ATTR_NAME = 'spellcheck';
 
 /**
  * A watermark plugin to manage watermark string for roosterjs
@@ -23,6 +23,7 @@ export default class Watermark implements EditorPlugin {
     private editor: Editor;
     private isWatermarkShowing: boolean;
     private disposer: () => void;
+    private spellcheckInitialValue: string;
 
     /**
      * Create an instance of Watermark plugin
@@ -48,11 +49,11 @@ export default class Watermark implements EditorPlugin {
      */
     initialize(editor: Editor) {
         this.editor = editor;
-        this.showHideWatermark(false /*ignoreCachedState*/);
         this.disposer = this.editor.addDomEventHandler({
             focus: this.handleWatermark,
             blur: this.handleWatermark,
         });
+        this.spellcheckInitialValue = this.editor.getEditorDomAttribute(SPELLCHECK_ATTR_NAME);
     }
 
     /**
@@ -70,10 +71,12 @@ export default class Watermark implements EditorPlugin {
      * @param event PluginEvent object
      */
     onPluginEvent(event: PluginEvent) {
-        if (event.eventType == PluginEventType.ContentChanged) {
+        if (event.eventType == PluginEventType.EditorReady) {
+            this.showHideWatermark(false /*ignoreCachedState*/);
+        } else if (event.eventType == PluginEventType.ContentChanged) {
             // When content is changed from setContent() API, current cached state
             // may not be accurate, so we ignore it
-            this.showHideWatermark((<ContentChangedEvent>event).source == ChangeSource.SetContent);
+            this.showHideWatermark(event.source == ChangeSource.SetContent);
         } else if (event.eventType == PluginEventType.ExtractContent && this.isWatermarkShowing) {
             this.removeWartermarkFromHtml(event as ExtractContentEvent);
         }
@@ -109,6 +112,7 @@ export default class Watermark implements EditorPlugin {
             replaceSelection: false,
             insertOnNewLine: false,
         });
+        this.editor.setEditorDomAttribute(SPELLCHECK_ATTR_NAME, 'false');
         this.isWatermarkShowing = true;
     }
 
@@ -126,6 +130,8 @@ export default class Watermark implements EditorPlugin {
                 parentNode.appendChild(this.editor.getDocument().createElement('BR'));
             }
         });
+
+        this.editor.setEditorDomAttribute(SPELLCHECK_ATTR_NAME, this.spellcheckInitialValue);
         this.isWatermarkShowing = false;
     }
 
