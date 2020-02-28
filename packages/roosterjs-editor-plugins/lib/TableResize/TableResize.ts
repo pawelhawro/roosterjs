@@ -1,5 +1,6 @@
-import { contains, fromHtml, getComputedStyle, VTable } from 'roosterjs-editor-dom';
+import { contains, fromHtml, isRtl, VTable } from 'roosterjs-editor-dom';
 import { Editor, EditorPlugin } from 'roosterjs-editor-core';
+import { isNode } from 'roosterjs-cross-window';
 import {
     ContentPosition,
     PluginEvent,
@@ -66,10 +67,7 @@ export default class TableResize implements EditorPlugin {
     private clickIntoCurrentTd(event: PluginMouseEvent) {
         let mouseEvent = event.rawEvent;
         let target = mouseEvent.target;
-        return (
-            target instanceof Node &&
-            contains(this.td, <Node>target, true /*treatSameNodeAsContain*/)
-        );
+        return isNode(target) && contains(this.td, <Node>target, true /*treatSameNodeAsContain*/);
     }
 
     private onMouseOver = (e: MouseEvent) => {
@@ -94,8 +92,7 @@ export default class TableResize implements EditorPlugin {
                 let handle = this.getResizeHandle();
 
                 left +=
-                    this.td.offsetLeft +
-                    (this.isRtl(table) ? 0 : this.td.offsetWidth - HANDLE_WIDTH);
+                    this.td.offsetLeft + (isRtl(table) ? 0 : this.td.offsetWidth - HANDLE_WIDTH);
                 handle.style.display = '';
                 handle.style.top = top + 'px';
                 handle.style.height = table.offsetHeight + 'px';
@@ -179,7 +176,7 @@ export default class TableResize implements EditorPlugin {
             let newWidth =
                 this.td.clientWidth -
                 cellPadding * 2 +
-                (e.pageX - this.initialPageX) * (this.isRtl(table) ? -1 : 1);
+                (e.pageX - this.initialPageX) * (isRtl(table) ? -1 : 1);
             this.editor.addUndoSnapshot((start, end) => {
                 this.setTableColumnWidth(newWidth + 'px');
                 this.editor.select(start, end);
@@ -219,9 +216,5 @@ export default class TableResize implements EditorPlugin {
         });
         vtable.writeBack();
         return this.editor.contains(this.td) ? this.td : vtable.getCurrentTd();
-    }
-
-    private isRtl(element: HTMLElement) {
-        return getComputedStyle(element, 'direction') == 'rtl';
     }
 }

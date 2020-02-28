@@ -1,13 +1,15 @@
 import * as React from 'react';
 import BuildInPluginState, { UrlPlaceholder } from '../BuildInPluginState';
+import SampleColorPickerPluginDataProvider from '../samplepicker/SampleColorPickerPluginDataProvider';
+import { EditorInstanceToggleablePlugins } from './EditorInstanceToggleablePlugins';
 import { ImageResize } from 'roosterjs-plugin-image-resize';
+import { PickerPlugin } from 'roosterjs-plugin-picker';
 import {
     Editor as RoosterJsEditor,
     EditorOptions,
     EditorPlugin,
     UndoService,
 } from 'roosterjs-editor-core';
-import { PickerPlugin } from 'roosterjs-plugin-picker';
 
 import {
     HyperLink,
@@ -17,11 +19,8 @@ import {
     TableResize,
     ContentEditFeatures,
     getDefaultContentEditFeatures,
-    CustomReplace as CustomReplacePlugin
+    CustomReplace as CustomReplacePlugin,
 } from 'roosterjs-editor-plugins';
-
-import { EditorInstanceToggleablePlugins} from './EditorInstanceToggleablePlugins';
-import SampleColorPickerPluginDataProvider from '../samplepicker/SampleColorPickerPluginDataProvider';
 
 const styles = require('./Editor.scss');
 const assign = require('object-assign');
@@ -29,6 +28,7 @@ const assign = require('object-assign');
 export interface EditorProps {
     plugins: EditorPlugin[];
     initState: BuildInPluginState;
+    content: string;
     className?: string;
     undo?: UndoService;
 }
@@ -46,8 +46,11 @@ export default class Editor extends React.Component<EditorProps, BuildInPluginSt
     }
 
     render() {
-        let className = (this.props.className || '') + ' ' + styles.editor;
-        return <div className={className} ref={ref => (this.contentDiv = ref)} />;
+        return (
+            <div className={this.props.className}>
+                <div className={styles.editor} ref={ref => (this.contentDiv = ref)} />
+            </div>
+        );
     }
 
     componentWillUpdate() {
@@ -76,12 +79,18 @@ export default class Editor extends React.Component<EditorProps, BuildInPluginSt
         this.setState(pluginState);
     }
 
+    getContent() {
+        return this.editor.getContent();
+    }
+
     private initEditor() {
         let pluginList = this.state.pluginList;
         editorInstanceToggleablePlugins = {
             hyperlink: pluginList.hyperlink ? new HyperLink(this.getLinkCallback()) : null,
             paste: pluginList.paste ? new Paste() : null,
-            contentEdit: pluginList.contentEdit ? new ContentEdit(this.getContentEditOptions()) : null,
+            contentEdit: pluginList.contentEdit
+                ? new ContentEdit(this.getContentEditOptions())
+                : null,
             watermark: pluginList.watermark ? new Watermark(this.state.watermarkText) : null,
             imageResize: pluginList.imageResize ? new ImageResize() : null,
             tableResize: pluginList.tableResize ? new TableResize() : null,
@@ -96,7 +105,9 @@ export default class Editor extends React.Component<EditorProps, BuildInPluginSt
             customReplace: pluginList.customReplace ? new CustomReplacePlugin() : null,
         };
         let plugins = [
-            ...Object.keys(editorInstanceToggleablePlugins).map(k => (editorInstanceToggleablePlugins as any)[k]),
+            ...Object.keys(editorInstanceToggleablePlugins).map(
+                k => (editorInstanceToggleablePlugins as any)[k]
+            ),
             ...this.props.plugins,
         ];
         let defaultFormat = { ...this.state.defaultFormat };
@@ -104,6 +115,7 @@ export default class Editor extends React.Component<EditorProps, BuildInPluginSt
             plugins: plugins,
             defaultFormat: defaultFormat,
             undo: this.props.undo,
+            initialContent: this.props.content,
         };
         this.editor = new RoosterJsEditor(this.contentDiv, options);
     }

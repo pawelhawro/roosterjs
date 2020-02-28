@@ -1,5 +1,6 @@
 import { DocumentCommand } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
+import { isHTMLElement } from 'roosterjs-cross-window';
 import {
     fromHtml,
     isVoidHtmlElement,
@@ -71,29 +72,12 @@ export default function processList(
             ) {
                 newList.replaceChild(clonedNode, newParentNode);
             }
-            if (relativeSelectionPath && document.body.contains(clonedNode)) {
+            if (relativeSelectionPath && editor.getDocument().body.contains(clonedNode)) {
                 let newRange = getRangeFromSelectionPath(clonedNode, relativeSelectionPath);
                 editor.select(newRange);
             }
         }
         // The alternative case is harder to solve, but we didn't specifically handle this before either.
-    }
-
-    //change font-size of list elements
-    if (newList != null) {
-        for (let i = 0; i < newList.children.length; i++) {
-            let listItem = newList.children.item(i) as HTMLElement;
-
-            if (getTagOfNode(listItem) == 'LI') {
-                if (listItem.childNodes.length > 0) {
-                    let firstSpan = listItem.children.item(0) as HTMLElement;
-
-                    if (getTagOfNode(firstSpan) == 'SPAN') {
-                        listItem.style.fontSize = firstSpan.style.fontSize;
-                    }
-                }
-            }
-        }
     }
 
     return newList;

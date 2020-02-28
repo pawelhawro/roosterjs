@@ -6,7 +6,7 @@ import { Editor, EditorPlugin } from 'roosterjs-editor-core';
  */
 export default class CopyPlugin implements EditorPlugin {
     private editor: Editor;
-    private copyDisposer: () => void;
+    private eventDisposer: () => void;
 
     /**
      * Get a friendly name of  this plugin
@@ -21,25 +21,28 @@ export default class CopyPlugin implements EditorPlugin {
      */
     public initialize(editor: Editor) {
         this.editor = editor;
-        this.copyDisposer = editor.addDomEventHandler('copy', this.onCopy);
+        this.eventDisposer = editor.addDomEventHandler({
+            copy: this.onExtract(false),
+            cut: this.onExtract(true),
+        });
     }
 
     /**
      * Dispose this plugin
      */
     public dispose() {
-        this.copyDisposer();
-        this.copyDisposer = null;
+        this.eventDisposer();
+        this.eventDisposer = null;
         this.editor = null;
     }
 
-    private onCopy = (event: Event) => {
+    private onExtract = (isCut: boolean) => (event: Event) => {
         // if it's dark mode...
         if (this.editor && this.editor.isDarkMode()) {
             // get whatever the current selection range is
             const selectionRange = this.editor.getSelectionRange();
             if (selectionRange && !selectionRange.collapsed) {
-                const clipboardEvent = (event as ClipboardEvent);
+                const clipboardEvent = event as ClipboardEvent;
                 const copyFragment = this.editor.getSelectionRange().cloneContents();
 
                 // revert just this selected range to light mode colors
@@ -52,10 +55,15 @@ export default class CopyPlugin implements EditorPlugin {
 
                 // put it on the clipboard
                 clipboardEvent.clipboardData.setData('text/html', normalizedContent);
-                clipboardEvent.clipboardData.setData('text/plain', containerDiv.innerText)
+                clipboardEvent.clipboardData.setData('text/plain', containerDiv.innerText);
+
+                // if it's cut, delete the contents
+                if (isCut) {
+                    this.editor.getSelectionRange().deleteContents();
+                }
 
                 event.preventDefault();
             }
         }
-    }
+    };
 }
