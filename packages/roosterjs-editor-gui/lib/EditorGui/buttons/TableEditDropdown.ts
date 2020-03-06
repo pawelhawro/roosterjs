@@ -185,7 +185,7 @@ export default class TableEditDropdown implements EditorToolbarButton {
 
     public generateElement(): HTMLSpanElement {
         let span = <HTMLSpanElement>document.createElement('span');
-        span.className = 'btn dropdown';
+        span.className = 'btn dropdown disabled';
         span.innerHTML = this.getIcon();
 
         document.addEventListener('click', (e: MouseEvent) => {
