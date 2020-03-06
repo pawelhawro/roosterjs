@@ -90,6 +90,11 @@ export interface ElementBasedFormatState {
      * Text aligned justified full
      */
     alignJustify?: boolean;
+
+    /**
+     * Cursor in table
+     */
+    isTable?: boolean;
 }
 
 /**

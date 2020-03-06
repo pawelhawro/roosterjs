@@ -1,6 +1,6 @@
 import { DocumentCommand } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
-import { isHTMLElement } from 'roosterjs-cross-window';
+//import { isHTMLElement } from 'roosterjs-cross-window';
 import {
     fromHtml,
     isVoidHtmlElement,
@@ -8,7 +8,7 @@ import {
     Browser,
     getSelectionPath,
     getRangeFromSelectionPath,
-    getTagOfNode,
+    //getTagOfNode,
 } from 'roosterjs-editor-dom';
 
 const TEMP_NODE_CLASS = 'ROOSTERJS_TEMP_NODE_FOR_LIST';

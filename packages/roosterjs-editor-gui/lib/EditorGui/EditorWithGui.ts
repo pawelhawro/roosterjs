@@ -21,6 +21,7 @@ import Spacer from './buttons/Spacer';
 import SubscriptButton from './buttons/SubscriptButton';
 import SuperscriptButton from './buttons/SuperscriptButton';
 import TableDropdownButton from './buttons/TableDropdownButton';
+import TableEditDropdown from './buttons/TableEditDropdown';
 import UnderlineButton from './buttons/UnderlineButton';
 import UndoButton from './buttons/UndoButton';
 import ZoomButton from './buttons/ZoomButton';
@@ -116,6 +117,7 @@ export default class EditorWithGui {
             new Spacer(this.editor),
 
             new TableDropdownButton(this.editor),
+            new TableEditDropdown(this.editor),
             new Spacer(this.editor),
 
             new ClearStyleButton(this.editor),

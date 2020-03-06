@@ -176,8 +176,12 @@
 .roosterjs-toolbar .btn.dropdown .options .option.selected {
     background-color: rgba(46, 150, 208, 0.25);
 }
+.roosterjs-toolbar .btn.dropdown.disabled {
+    opacity: 0.5;
+}
 .roosterjs-toolbar .btn.dropdown.opened .options {
     display: block;
+    z-index: 2;
 }
 .roosterjs-toolbar .options.table-insert {
     width: 210px;
@@ -440,3 +444,5 @@
 .roosterjs-editor *[data-mergefield]:after {
     content: '\00bb';
 }
+
+/*# sourceMappingURL=roostergui.css.map */

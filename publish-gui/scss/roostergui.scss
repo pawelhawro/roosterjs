@@ -188,9 +188,14 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
                 }
             }
 
+            &.disabled {
+                opacity: 0.5;
+            }
+
             &.opened {
                 .options {
                     display: block;
+                    z-index: 2;
                 }
             }
         }

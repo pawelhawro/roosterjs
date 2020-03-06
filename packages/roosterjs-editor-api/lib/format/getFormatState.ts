@@ -23,6 +23,9 @@ export function getElementBasedFormatState(
 ): ElementBasedFormatState {
     let listTag = getTagOfNode(cacheGetElementAtCursor(editor, event, 'OL,UL'));
     let headerTag = getTagOfNode(cacheGetElementAtCursor(editor, event, 'H1,H2,H3,H4,H5,H6'));
+    let tableTag = getTagOfNode(cacheGetElementAtCursor(editor, event, 'TD'));
+
+    console.log(tableTag);
 
     let xel = cacheGetElementAtCursor(
         editor,
@@ -45,6 +48,7 @@ export function getElementBasedFormatState(
         isBullet: listTag == 'UL',
         isNumbering: listTag == 'OL',
         headerLevel: (headerTag && parseInt(headerTag[1])) || 0,
+        isTable: tableTag == 'TD',
 
         canUnlink: !!editor.queryElements('a[href]', QueryScope.OnSelection)[0],
         canAddImageAltText: !!editor.queryElements('img', QueryScope.OnSelection)[0],
