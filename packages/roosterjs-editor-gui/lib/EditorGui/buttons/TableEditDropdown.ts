@@ -107,13 +107,7 @@ export default class TableEditDropdown implements EditorToolbarButton {
 
         console.log('Size  ' + cells.length + '  index = ' + index);
 
-        let colspanAttr = currentCell.attributes.getNamedItem('colspan');
-
-        var colspan = 1;
-
-        if (null != colspanAttr) {
-            colspan = parseInt(colspanAttr.value);
-        }
+        var colspan = this.colspan(currentCell);
 
         var canSpanRight = false;
 
@@ -129,12 +123,24 @@ export default class TableEditDropdown implements EditorToolbarButton {
         if (canSpanRight) {
             console.log('Setting span');
             this.editor.addUndoSnapshot(() => {
-                currentRow.removeChild(cells.item(index + 1));
-                currentCell.setAttribute('colspan', colspan + 1 + '');
+                var next = <HTMLElement>cells.item(index + 1);
+                var nextcolspan = this.colspan(next);
+                currentRow.removeChild(next);
+                currentCell.setAttribute('colspan', colspan + nextcolspan + '');
             }, ChangeSource.Format);
         }
 
         console.log(colspan);
+    }
+
+    private colspan(e: HTMLElement): number {
+        let colspanAttr = e.attributes.getNamedItem('colspan');
+
+        var colspan = 1;
+        if (null != colspanAttr) {
+            colspan = parseInt(colspanAttr.value);
+        }
+        return colspan;
     }
 
     public despan() {
@@ -154,13 +160,7 @@ export default class TableEditDropdown implements EditorToolbarButton {
 
         console.log('Size  ' + cells.length + '  index = ' + index);
 
-        let colspanAttr = currentCell.attributes.getNamedItem('colspan');
-
-        var colspan = 1;
-
-        if (null != colspanAttr) {
-            colspan = parseInt(colspanAttr.value);
-        }
+        var colspan = this.colspan(currentCell);
 
         if (colspan == 1) {
             return;
