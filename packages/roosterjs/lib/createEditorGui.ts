@@ -26,6 +26,7 @@ export default function createEditorWithGui(
         new ContentEdit(),
         new TabPressPlugin(),
         new RemoveMergeFieldBackgroundOnPaste(),
+        new RemoveTableCellOutlineOnPaste(),
     ];
 
     if (additionalPlugins) {
@@ -58,7 +59,6 @@ function keepHrefToVoid(value: string, element: HTMLElement, context: Object): s
     return null;
 }
 
-// This plugin will insert an English word when user is inputting numbers
 class RemoveMergeFieldBackgroundOnPaste implements EditorPlugin {
     private editor: Editor;
 
@@ -87,6 +87,41 @@ class RemoveMergeFieldBackgroundOnPaste implements EditorPlugin {
 
                 links.forEach(link => {
                     link.removeAttribute('style');
+                });
+            }
+        }
+    }
+}
+
+class RemoveTableCellOutlineOnPaste implements EditorPlugin {
+    private editor: Editor;
+
+    getName() {
+        return 'RemoveTableCellOutlineOnPaste';
+    }
+
+    initialize(editor: Editor) {
+        this.editor = editor;
+    }
+
+    dispose() {
+        this.editor = null;
+    }
+
+    onPluginEvent(event: PluginEvent) {
+        if (event.eventType == PluginEventType.BeforePaste) {
+            let beforePasteEvent = <BeforePasteEvent>event;
+
+            if (beforePasteEvent.pasteOption == PasteOption.PasteHtml) {
+                console.log('Paste data: ', beforePasteEvent, this.editor);
+
+                var cells = beforePasteEvent.fragment.querySelectorAll('td');
+
+                console.log('Paste data: ', cells);
+
+                cells.forEach(cell => {
+                    cell.style.outline = null;
+                    cell.style.outlineOffset = null;
                 });
             }
         }
