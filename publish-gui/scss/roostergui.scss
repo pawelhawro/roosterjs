@@ -424,6 +424,11 @@ $_fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetic
         font-weight: 700;
     }
 
+    table[data-tablestyle='borderless'] td {
+        outline: 1px dotted rgba(40, 40, 40, 0.2);
+        outline-offset: -2px;
+    }
+
     div.page-break {
         margin: 0px;
         background-color: #f7f7f7;

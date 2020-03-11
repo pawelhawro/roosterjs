@@ -3,6 +3,7 @@ import icons from '../icons/icons';
 import { ChangeSource, FormatState } from 'roosterjs-editor-types';
 import { Editor } from 'roosterjs-editor-core';
 import { insertTable } from 'roosterjs-editor-api';
+import { VTable } from 'roosterjs/lib';
 
 export default class TableEditDropdown implements EditorToolbarButton {
     private editor: Editor;
@@ -88,6 +89,44 @@ export default class TableEditDropdown implements EditorToolbarButton {
         this.editor.addUndoSnapshot(() => {
             currentTable.insertBefore(clonedRow, currentRow.nextSibling);
         }, ChangeSource.Format);
+    }
+
+    public hideBorders() {
+        let table = this.editor.getElementAtCursor('TABLE') as HTMLTableElement;
+        if (table) {
+            this.editor.addUndoSnapshot((start, end) => {
+                let vtable = new VTable(table);
+                vtable.applyFormat({
+                    topBorderColor: 'transparent',
+                    bottomBorderColor: 'transparent',
+                    verticalBorderColor: 'transparent',
+                });
+                vtable.writeBack();
+                this.editor.focus();
+                this.editor.select(start, end);
+                table.setAttribute('data-tablestyle', 'borderless');
+            }, ChangeSource.Format);
+        }
+    }
+
+    public showBorders() {
+        let table = this.editor.getElementAtCursor('TABLE') as HTMLTableElement;
+        if (table) {
+            this.editor.addUndoSnapshot((start, end) => {
+                let vtable = new VTable(table);
+                vtable.applyFormat({
+                    bgColorEven: '#FFF',
+                    bgColorOdd: '#FFF',
+                    topBorderColor: '#ABABAB',
+                    bottomBorderColor: '#ABABAB',
+                    verticalBorderColor: '#ABABAB',
+                });
+                vtable.writeBack();
+                this.editor.focus();
+                this.editor.select(start, end);
+                table.setAttribute('data-tablestyle', 'borders');
+            }, ChangeSource.Format);
+        }
     }
 
     public spanWithRight() {
@@ -251,6 +290,26 @@ export default class TableEditDropdown implements EditorToolbarButton {
         o4.addEventListener('click', (e: MouseEvent) => {
             this.editor.focus();
             this.despan();
+        });
+
+        var o5 = <HTMLSpanElement>document.createElement('span');
+        o5.className = 'option';
+        o5.innerText = 'Ukryj obramowanie';
+        optionsDiv.appendChild(o5);
+
+        o5.addEventListener('click', (e: MouseEvent) => {
+            this.editor.focus();
+            this.hideBorders();
+        });
+
+        var o6 = <HTMLSpanElement>document.createElement('span');
+        o6.className = 'option';
+        o6.innerText = 'Pokaż obramowanie';
+        optionsDiv.appendChild(o6);
+
+        o6.addEventListener('click', (e: MouseEvent) => {
+            this.editor.focus();
+            this.showBorders();
         });
 
         span.appendChild(optionsDiv);

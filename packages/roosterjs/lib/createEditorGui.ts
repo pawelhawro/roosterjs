@@ -20,6 +20,7 @@ export default function createEditorWithGui(
         new HyperLink(),
         new Paste(null, {
             'data-mergefield': keepDataMergefield,
+            'data-tablestyle': keepDataMergefield,
             href: keepHrefToVoid,
         }),
         new ContentEdit(),
