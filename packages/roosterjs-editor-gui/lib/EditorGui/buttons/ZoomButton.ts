@@ -1,88 +1,51 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
+import { EditorWithGui } from 'roosterjs-editor-gui/lib';
 import { FormatState } from 'roosterjs-editor-types';
-import { getFormatState, toggleHeader } from 'roosterjs-editor-api';
 
-interface HeaderStyle {
-    level: number;
-    name: string;
-    style: (node: HTMLElement) => void;
-}
+const sizes = [50, 90, 100, 110, 120, 130, 140, 150, 200];
 
-const sizes: { [key: string]: HeaderStyle } = {
-    empty: {
-        level: 0,
-        name: 'Tekst',
-        style: (node: HTMLElement) => {
-            node.classList.add('text');
-        },
-    },
-    h1: {
-        level: 1,
-        name: 'Naglowek 1',
-        style: (node: HTMLElement) => {
-            node.classList.add('h1');
-        },
-    },
-    h2: {
-        level: 2,
-        name: 'Naglowek 2',
-        style: (node: HTMLElement) => {
-            node.classList.add('h2');
-        },
-    },
-};
-
-export default class HeaderButton implements EditorToolbarButton {
+export default class ZoomButton implements EditorToolbarButton {
     private editor: Editor;
     private span: HTMLElement;
     private spanLabel: HTMLElement;
+    private wrapper: HTMLElement;
 
     private optionsSpans: Map<number, HTMLElement> = new Map();
 
-    constructor(editor: Editor) {
-        this.editor = editor;
+    constructor(editor: EditorWithGui) {
+        this.wrapper = editor.getEditorDiv();
+        this.editor = editor.getEditor();
         this.span = this.generateElement();
     }
 
     getName(): string {
-        return 'fontsize';
+        return 'zoom';
     }
 
     getIcon(): string {
-        return icons.header;
+        return icons.zoom;
     }
 
     doAction(size: string) {
-        toggleHeader(this.editor, parseInt(size));
-        this.updateState(getFormatState(this.editor));
-    }
+        let zoom = parseFloat(size) / 100;
+        this.wrapper.style.zoom = zoom + '';
 
-    updateState(state: FormatState) {
-        let size = state.headerLevel;
-
-        if (this.optionsSpans.has(size)) {
-            if (this.optionsSpans.get(size).classList.contains('selected')) {
-                return;
-            }
-        }
+        let s = parseInt(size);
 
         this.optionsSpans.forEach((v, key) => {
-            if (key != size) {
+            if (key != s) {
                 v.classList.remove('selected');
             } else {
                 v.classList.add('selected');
+                this.spanLabel.innerHTML = size + '%';
             }
         });
+    }
 
-        Object.keys(sizes).forEach(key => {
-            let element = sizes[key];
-
-            if (element.level == size) {
-                this.spanLabel.innerHTML = sizes[key].name;
-            }
-        });
+    updateState(state: FormatState) {
+        //nothing
     }
 
     public append(div: HTMLDivElement) {
@@ -95,7 +58,7 @@ export default class HeaderButton implements EditorToolbarButton {
         span.innerHTML = this.getIcon();
 
         this.spanLabel = <HTMLSpanElement>document.createElement('span');
-        this.spanLabel.innerHTML = sizes.empty.name;
+        this.spanLabel.innerHTML = '100%';
 
         span.appendChild(this.spanLabel);
 
@@ -120,17 +83,14 @@ export default class HeaderButton implements EditorToolbarButton {
         let optionsDiv = <HTMLDivElement>document.createElement('div');
         optionsDiv.className = 'options';
 
-        Object.keys(sizes).forEach(key => {
-            let element = sizes[key];
+        sizes.forEach(a => {
             var o = <HTMLSpanElement>document.createElement('span');
             o.className = 'option';
-            o.setAttribute('data-size', element.level + '');
-            o.innerHTML = element.name;
-            element.style(o);
-
+            o.setAttribute('data-size', a + '');
+            o.innerHTML = a + '%';
             optionsDiv.appendChild(o);
 
-            this.optionsSpans.set(element.level, o);
+            this.optionsSpans.set(a, o);
         });
 
         optionsDiv.addEventListener('click', (e: MouseEvent) => {

@@ -1,7 +1,8 @@
 import AbstractButton from './AbstractButton';
 import icons from '../icons/icons';
-import { clearBlockFormat, clearFormat, FormatState } from 'roosterjs/lib';
+import { clearBlockFormat, clearFormat } from 'roosterjs-editor-api';
 import { Editor } from 'roosterjs-editor-core';
+import { FormatState } from 'roosterjs-editor-types';
 
 export default class ClearStyleButton extends AbstractButton {
     constructor(editor: Editor) {

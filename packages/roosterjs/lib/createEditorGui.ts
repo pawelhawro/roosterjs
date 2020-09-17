@@ -1,13 +1,33 @@
+import TabPressPlugin from 'roosterjs-editor-gui/lib/EditorGui/plugins/TabPressPlugin';
 import { ContentEdit, HyperLink, Paste } from 'roosterjs-editor-plugins';
-import { EditorOptions, EditorPlugin } from 'roosterjs-editor-core';
+import { Editor, EditorOptions, EditorPlugin } from 'roosterjs-editor-core';
 import { EditorWithGui } from 'roosterjs-editor-gui';
+import {
+    PluginEvent,
+    PluginEventType,
+    BeforePasteEvent,
+    PasteOption,
+} from 'roosterjs-editor-types';
 
 export default function createEditorWithGui(
     contentDiv: HTMLDivElement,
+    mergeFields: string[],
     additionalPlugins?: EditorPlugin[],
     initialContent?: string
 ): EditorWithGui {
-    let plugins: EditorPlugin[] = [new HyperLink(), new Paste(), new ContentEdit()];
+    //new plugin initialize
+    let plugins: EditorPlugin[] = [
+        new HyperLink(),
+        new Paste(null, {
+            'data-mergefield': keepDataMergefield,
+            'data-tablestyle': keepDataMergefield,
+            href: keepHrefToVoid,
+        }),
+        new ContentEdit(),
+        new TabPressPlugin(),
+        new RemoveMergeFieldBackgroundOnPaste(),
+        new RemoveTableCellOutlineOnPaste(),
+    ];
 
     if (additionalPlugins) {
         plugins = plugins.concat(additionalPlugins);
@@ -16,14 +36,94 @@ export default function createEditorWithGui(
     let options: EditorOptions = {
         plugins: plugins,
         initialContent: initialContent,
-        defaultFormat: {
-            //fontFamily: 'Calibri,Arial,Helvetica,sans-serif',
-            //fontSize: '11pt',
-            //textColor: '#000000',
-        },
+        defaultFormat: {},
     };
 
     //let editor = createEditor(contentDiv, additionalPlugins, initialContent);
 
-    return new EditorWithGui(contentDiv, options);
+    return new EditorWithGui(contentDiv, mergeFields, options);
+}
+
+function keepDataMergefield(value: string, element: HTMLElement, context: Object): string {
+    return value;
+}
+
+function keepHrefToVoid(value: string, element: HTMLElement, context: Object): string {
+    let attr = value.replace(/\s/g, '').toLowerCase();
+    if (attr.startsWith('javascript:')) {
+        return '#';
+    }
+    if (attr.startsWith('http://') || attr.startsWith('https://')) {
+        return value;
+    }
+    return null;
+}
+
+class RemoveMergeFieldBackgroundOnPaste implements EditorPlugin {
+    private editor: Editor;
+
+    getName() {
+        return 'RemoveMergeFieldBackgroundOnPaste';
+    }
+
+    initialize(editor: Editor) {
+        this.editor = editor;
+    }
+
+    dispose() {
+        this.editor = null;
+    }
+
+    onPluginEvent(event: PluginEvent) {
+        if (event.eventType == PluginEventType.BeforePaste) {
+            let beforePasteEvent = <BeforePasteEvent>event;
+
+            if (beforePasteEvent.pasteOption == PasteOption.PasteHtml) {
+                console.log('Paste data: ', beforePasteEvent, this.editor);
+
+                var links = beforePasteEvent.fragment.querySelectorAll('a');
+
+                console.log('Paste data: ', links);
+
+                links.forEach(link => {
+                    link.removeAttribute('style');
+                });
+            }
+        }
+    }
+}
+
+class RemoveTableCellOutlineOnPaste implements EditorPlugin {
+    private editor: Editor;
+
+    getName() {
+        return 'RemoveTableCellOutlineOnPaste';
+    }
+
+    initialize(editor: Editor) {
+        this.editor = editor;
+    }
+
+    dispose() {
+        this.editor = null;
+    }
+
+    onPluginEvent(event: PluginEvent) {
+        if (event.eventType == PluginEventType.BeforePaste) {
+            let beforePasteEvent = <BeforePasteEvent>event;
+
+            if (beforePasteEvent.pasteOption == PasteOption.PasteHtml) {
+                console.log('Paste data: ', beforePasteEvent, this.editor);
+
+                var cells = beforePasteEvent.fragment.querySelectorAll('td');
+
+                console.log('Paste data: ', cells);
+
+                cells.forEach(cell => {
+                    cell.style.outline = null;
+                    cell.style.outlineOffset = null;
+                });
+            }
+        }
+    }
 }

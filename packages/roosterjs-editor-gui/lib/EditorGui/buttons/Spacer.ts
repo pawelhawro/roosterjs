@@ -1,6 +1,6 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 
 /**
  * Interface of an editor plugin
@@ -8,7 +8,7 @@ import { FormatState } from 'roosterjs/lib';
 export default class Spacer implements EditorToolbarButton {
     private span: HTMLElement;
 
-    constructor(_editor: Editor) {
+    constructor(editor: Editor) {
         this.span = this.generateElement();
     }
 

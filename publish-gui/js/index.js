@@ -1,6 +1,7 @@
-import * as rooster from 'roosterjs';
-
-rooster.createEditorWithGui(document.getElementById('mainPane') as HTMLDivElement, [
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: !0 });
+var rooster = require('roosterjs');
+rooster.createEditorWithGui(document.getElementById('mainPane'), [
     'DataDo',
     'DataOd',
     'DataUmowy',

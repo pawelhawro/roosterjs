@@ -1,7 +1,7 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 import { getFormatState } from 'roosterjs-editor-api';
 import { toggleBold } from 'roosterjs-editor-api';
 /**
@@ -14,7 +14,6 @@ export default class BoldButton implements EditorToolbarButton {
     constructor(editor: Editor) {
         this.editor = editor;
         this.span = this.generateElement();
-        console.log(this.editor);
     }
 
     getName(): string {
@@ -26,7 +25,6 @@ export default class BoldButton implements EditorToolbarButton {
     }
 
     doAction() {
-        console.log(this, this.editor);
         toggleBold(this.editor);
         this.updateState(getFormatState(this.editor));
     }
@@ -37,7 +35,6 @@ export default class BoldButton implements EditorToolbarButton {
         } else {
             this.span.classList.remove('checked');
         }
-        console.log(state);
     }
 
     public append(div: HTMLDivElement) {
@@ -53,7 +50,7 @@ export default class BoldButton implements EditorToolbarButton {
         let span = <HTMLSpanElement>document.createElement('span');
         span.className = 'btn';
         span.innerHTML = this.getIcon();
-        span.addEventListener('click', (_e: MouseEvent) => {
+        span.addEventListener('click', (e: MouseEvent) => {
             this.doAction();
         });
         return span;

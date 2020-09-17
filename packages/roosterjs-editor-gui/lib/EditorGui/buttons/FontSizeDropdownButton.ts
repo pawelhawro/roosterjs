@@ -1,7 +1,7 @@
 import EditorToolbarButton from '../interfaces/EditorToolbarButton';
 import icons from '../icons/icons';
 import { Editor } from 'roosterjs-editor-core';
-import { FormatState } from 'roosterjs/lib';
+import { FormatState } from 'roosterjs-editor-types';
 import { getFormatState, setFontSize } from 'roosterjs-editor-api';
 
 const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 36];
@@ -9,6 +9,7 @@ const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 36];
 export default class FontSizeDropdownButton implements EditorToolbarButton {
     private editor: Editor;
     private span: HTMLElement;
+    private spanLabel: HTMLElement;
 
     private optionsSpans: Map<number, HTMLElement> = new Map();
 
@@ -33,8 +34,6 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
     }
 
     updateState(state: FormatState) {
-        console.log(state);
-
         let size = parseInt(state.fontSize);
 
         if (this.optionsSpans.has(size)) {
@@ -48,6 +47,7 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
                 v.classList.remove('selected');
             } else {
                 v.classList.add('selected');
+                this.spanLabel.innerHTML = key + '';
             }
         });
     }
@@ -60,7 +60,20 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
         let span = <HTMLSpanElement>document.createElement('span');
         span.className = 'btn dropdown';
         span.innerHTML = this.getIcon();
-        span.addEventListener('click', (_e: MouseEvent) => {
+
+        this.spanLabel = <HTMLSpanElement>document.createElement('span');
+        this.spanLabel.innerHTML = '12';
+        span.appendChild(this.spanLabel);
+
+        document.addEventListener('click', (e: MouseEvent) => {
+            var ec = e.target as HTMLElement;
+
+            if (this.span.classList.contains('opened') && !this.span.contains(ec)) {
+                this.span.classList.remove('opened');
+            }
+        });
+
+        span.addEventListener('click', (e: MouseEvent) => {
             this.editor.focus();
 
             if (this.span.classList.contains('opened')) {
@@ -89,11 +102,7 @@ export default class FontSizeDropdownButton implements EditorToolbarButton {
             if (target && target instanceof HTMLElement) {
                 let tw = target as HTMLElement;
                 this.doAction(tw.dataset.size);
-
-                console.log(tw);
             }
-
-            console.log(e);
         });
 
         span.appendChild(optionsDiv);
