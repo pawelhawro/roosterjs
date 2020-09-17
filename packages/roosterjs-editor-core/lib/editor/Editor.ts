@@ -118,6 +118,15 @@ export default class Editor {
     }
 
     /**
+     * Is given div contentDiv
+     * @param div
+     */
+    public isContentDiv(div: HTMLElement): boolean {
+        return this.core.contentDiv == div;
+    }
+
+
+    /**
      * Dispose this editor, dispose all plugins and custom data
      */
     public dispose(): void {

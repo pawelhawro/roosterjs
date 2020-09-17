@@ -1,5 +1,5 @@
 import DOM from './DOM';
-import { EditorWithGui } from 'roosterjs-editor-gui/lib';
+import { EditorWithGui } from 'roosterjs-editor-gui';
 
 /**
  * Set indentation at selection

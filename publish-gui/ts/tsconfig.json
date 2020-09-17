@@ -8,7 +8,7 @@
         "sourceMap": true,
         "removeComments": true,
         "noImplicitAny": true,
-        "preserveConstEnums": false,
+        "preserveConstEnums": true,
         "noUnusedLocals": true,
         "paths": {
             "roosterjs": ["packages/roosterjs/lib/index"],

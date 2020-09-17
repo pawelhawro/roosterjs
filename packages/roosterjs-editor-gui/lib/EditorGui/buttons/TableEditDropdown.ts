@@ -61,9 +61,11 @@ export default class TableEditDropdown implements EditorToolbarButton {
         });
 
         if (below) {
+
             this.editor.addUndoSnapshot(() => {
                 currentTable.insertBefore(clonedRow, currentRow.nextSibling);
             }, ChangeSource.Format);
+
         } else {
             this.editor.addUndoSnapshot(() => {
                 currentTable.insertBefore(clonedRow, currentRow);
